@@ -1,6 +1,7 @@
 {
-  "name": "@dev/defaults",
+  "name": "@dev/preset",
   "packageManager": "yarn@3.1.1",
+  "version": "1.0.0",
   "dependencies": {
     "gts": "^3.1.0",
     "jest": "^27.4.7",

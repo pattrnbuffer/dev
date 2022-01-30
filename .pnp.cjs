@@ -27,14 +27,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/notion"
       },
       {
-        "name": "@dev/defaults",
-        "reference": "workspace:support/defaults"
+        "name": "@dev/preset",
+        "reference": "workspace:packages/preset"
       }
     ],
     "enableTopLevelFallback": true,
     "ignorePatternData": "(^(?:\\.yarn\\/sdks(?:\\/(?!\\.{1,2}(?:\\/|$))(?:(?:(?!(?:^|\\/)\\.{1,2}(?:\\/|$)).)*?)|$))$)",
     "fallbackExclusionList": [
-      ["@dev/defaults", ["workspace:support/defaults"]],
+      ["@dev/preset", ["workspace:packages/preset"]],
       ["dev", ["workspace:."]],
       ["notion", ["workspace:packages/notion"]]
     ],

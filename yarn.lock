@@ -400,9 +400,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@dev/defaults@workspace:^, @dev/defaults@workspace:support/defaults":
+"@dev/preset@workspace:^, @dev/preset@workspace:packages/preset":
   version: 0.0.0-use.local
-  resolution: "@dev/defaults@workspace:support/defaults"
+  resolution: "@dev/preset@workspace:packages/preset"
   dependencies:
     "@types/node": ^17.0.13
     gts: ^3.1.0
@@ -4259,7 +4259,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "notion@workspace:packages/notion"
   dependencies:
-    "@dev/defaults": "workspace:^"
+    "@dev/preset": "workspace:^"
     "@notionhq/client": ^0.4.13
     "@types/node": ^17.0.13
     gts: ^3.1.0

@@ -1,5 +1,5 @@
 {
-  "extends": "@dev/defaults/tsconfig.json",
+  "extends": "@dev/preset/tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build"

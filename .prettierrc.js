@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('"./support/defaults/.prettierrc.json'),
+  ...require('"./packages/preset/.prettierrc.json'),
 };

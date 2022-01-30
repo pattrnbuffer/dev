@@ -1,3 +1,3 @@
 {
-  "extends": "./support/defaults/.eslintrc.json"
+  "extends": "./packages/preset/.eslintrc.json"
 }
