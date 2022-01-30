@@ -1,0 +1,15 @@
+{
+  "extends": "./support/defaults/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "build",
+    "target": "es2021",
+    "lib": [
+      "es2021"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ]
+}

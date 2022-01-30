@@ -1,0 +1,21 @@
+{
+  "name": "@dev/defaults",
+  "packageManager": "yarn@3.1.1",
+  "dependencies": {
+    "gts": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.13",
+    "gts": "^3.1.0",
+    "typescript": "^4.5.5"
+  },
+  "scripts": {
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run lint"
+  }
+}
