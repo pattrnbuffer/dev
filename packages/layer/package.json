@@ -1,5 +1,5 @@
 {
-  "name": "layer",
+  "name": "@dev/layer",
   "version": "1.0.0",
   "description": "multi dimensional 💫 layer reducers",
   "main": "src/index.ts",
@@ -26,8 +26,12 @@
   "devDependencies": {
     "@dev/preset": "workspace:^",
     "@types/node": "^17.0.13",
+    "@types/react": "^17.0.38",
     "gts": "^3.1.0",
     "jest": "^27.4.7",
     "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "react": "^17.0.2"
   }
 }

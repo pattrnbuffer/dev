@@ -4,7 +4,7 @@
   "description": "a notion client",
   "main": "src/index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "lint": "gts lint",
     "clean": "gts clean",
     "compile": "tsc",
@@ -27,9 +27,10 @@
     "@notionhq/client": "^0.4.13"
   },
   "devDependencies": {
-    "@dev/defaults": "workspace:^",
+    "@dev/preset": "workspace:^",
     "@types/node": "^17.0.13",
     "gts": "^3.1.0",
+    "jest": "^27.4.7",
     "typescript": "^4.5.5"
   }
 }
