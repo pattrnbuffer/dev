@@ -1,5 +1,4 @@
-const { createJestPreset } = require("ts-jest");
-
+const { createJestPreset } = require('ts-jest');
 
 module.exports = createJestPreset(false, {
   roots: ['<rootDir>'],
@@ -16,6 +15,4 @@ module.exports = createJestPreset(false, {
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
   ],
-})
-
-console.log(module.exports)
+});

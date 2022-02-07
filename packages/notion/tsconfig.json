@@ -1,11 +1,7 @@
 {
   "extends": "@dev/preset/tsconfig.json",
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "build"
-  },
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ]
+    "outDir": "build",
+    "rootDir": "."
+  }
 }

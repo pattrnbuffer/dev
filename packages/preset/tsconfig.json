@@ -1,16 +1,11 @@
 {
   "display": "@dev/preset",
-  "extends": "./node_modules/gts/tsconfig-google.json",
+  "extends": "gts/tsconfig-google.json",
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "build",
     "target": "es2021",
     "lib": [
       "es2021"
-    ]
-  },
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ]
+    ],
+    "resolveJsonModule": true
+  }
 }

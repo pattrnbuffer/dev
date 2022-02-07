@@ -1,0 +1,19 @@
+{
+  "name": "@dev/hooks",
+  "version": "1.0.0",
+  "description": "The definitive collection of idiomatic hooks 👀",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pattrnbuffer/dev.git"
+  },
+  "author": "Evan <me@evanrs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pattrnbuffer/dev/issues"
+  },
+  "homepage": "https://github.com/pattrnbuffer/dev#readme"
+}
