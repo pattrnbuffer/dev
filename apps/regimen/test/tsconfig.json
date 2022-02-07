@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "files": [
+    "./**./*.ts",
+    "./**./*.tsx"
+  ],
+  "include": [
+    "./globals.d.ts"
+  ]
+}
