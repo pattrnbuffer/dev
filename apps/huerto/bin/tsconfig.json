@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "module": "CommonJS",
+    "skipLibCheck": true,
+    "outDir": "./",
+    "noEmit": false
+  },
+}
