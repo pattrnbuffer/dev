@@ -7,3 +7,5 @@ export type Bridge = Awaited<
 export type API = Awaited<
   ReturnType<ReturnType<typeof idiots.api.createLocal>['connect']>
 >;
+
+export type LightsType = Awaited<ReturnType<API['lights']['getLight']>>;

@@ -29,6 +29,10 @@ async function main() {
 export type LinkConnected = Omit<LinkCreated, 'status'> & {
   status: 'link:connected';
   api: API;
+  // TODO: is this the stupidest extensibility there is?
+  //       it prioritizes the value of instance over the
+  //       path to get there
+  features: ('lights' | 'capabilities')[];
 };
 
 export async function get(link: LinkCreated, path: 'config') {
