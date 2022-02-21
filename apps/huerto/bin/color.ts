@@ -16,28 +16,37 @@ export const Color = {
 require.main === module && main();
 
 async function main() {
-  let input: { quit?: boolean } = {};
-  let states: ColorLink[] = [];
-
   const links = await Links.read();
 
-  while (!input?.quit) {
+  let states: ColorLink[] = [];
+
+  for (
+    let state = { loop: true };
+    state.loop;
+    state = await prompts({
+      name: 'loop',
+      type: 'confirm',
+      message: 'continue?',
+      initial: true,
+    })
+  ) {
     const { xy } = (await prompts(colorPrompt.xy)) as XYReturnType;
 
     states = await setColorForAllLights(links, async state => {
       return state.bri(254).xy(...xy);
     });
-
-    // input = await prompts({
-    //   name: 'quit',
-    //   type: 'toggle',
-    //   inactive: 'yes',
-    //   active: 'quit',
-    //   message: 'continue?',
-    // });
   }
 
-  console.log(inspect(states, false, 6, true));
+  console.log(
+    inspect(
+      // @ts-expect-error: idiots api doesn't publicly expose the
+      //                   light state on a class called light state
+      states.map(({ state }) => state._state),
+      false,
+      6,
+      true,
+    ),
+  );
 }
 
 export type ColorLink = LightLink & {
