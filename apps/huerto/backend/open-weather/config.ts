@@ -1,7 +1,10 @@
-export const appId = process.env.OPENWEATHER_APP_ID ?? 'MISSING_APP_ID';
+export const appId =
+  process.env.OPENWEATHER_APP_ID ?? 'env:missing:OPENWEATHER_APP_ID';
 
-const [lat, long] = process.env.LAT_LONG?.replace(/\s/g, '').split(',') ?? [];
-export const latLong: [string, string] = [
-  lat ?? 'MISSING_LAT_LONG',
-  long ?? 'MISSING_LAT_LONG',
+const [lat, long] =
+  process.env.OPENWEATHER_LOCATION?.replace(/\s/g, '').split(',') ?? [];
+
+export const location: [string, string] = [
+  lat ?? 'env:missing:OPENWEATHER_LOCATION',
+  long ?? 'env:missing:OPENWEATHER_LOCATION',
 ];

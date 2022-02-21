@@ -16,3 +16,11 @@ export const OpenWeather = {
     throw 'OpenWeather not implemented';
   },
 };
+
+export type OpenWeatherOneCallProps = {
+  appId: string;
+  point: [string, string];
+};
+export function urlFor({ appId, point: [lat, long] }: OpenWeatherOneCallProps) {
+  return `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&appid=${appId}`;
+}
