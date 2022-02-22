@@ -1,12 +1,13 @@
-export const OneCall = {
-  url: urlForOneCall,
-};
+import got from 'got';
+import { OneCallResponseType } from './types';
+import { appId, dataUrl, units } from './config';
 
 export type OneCallProps = {
-  appId: string;
   location: [string, string];
 };
 
-export function urlForOneCall({ appId, location: [lat, long] }: OneCallProps) {
-  return `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${long}&appid=${appId}`;
-}
+export const oneCall = (props: OneCallProps) =>
+  got(oneCall.url(props)).json<OneCallResponseType>();
+
+oneCall.url = ({ location: [lat, long] }: OneCallProps) =>
+  `${dataUrl}/onecall?appid=${appId}&lat=${lat}&lon=${long}&units=${units}`;

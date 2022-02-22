@@ -8,3 +8,7 @@ export const location: [string, string] = [
   lat ?? 'env:missing:OPENWEATHER_LOCATION',
   long ?? 'env:missing:OPENWEATHER_LOCATION',
 ];
+
+export const dataUrl = `https://api.openweathermap.org/data/2.5`;
+
+export const units: 'standard' | 'metirc' | 'imperial' = 'imperial';
