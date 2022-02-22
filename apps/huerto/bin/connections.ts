@@ -36,7 +36,7 @@ export type LinkConnected = Omit<LinkCreated, 'status'> & {
 };
 
 export async function get(link: LinkCreated, path: 'config') {
-  const data = await got
+  return got
     .get(`http://${link.bridge.ipaddress}/api/${link.user.username}/${path}`)
     .json();
 }

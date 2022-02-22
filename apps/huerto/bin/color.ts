@@ -33,7 +33,7 @@ async function main() {
     const { xy } = (await prompts(colorPrompt.xy)) as XYReturnType;
 
     states = await setColorForAllLights(links, async state => {
-      return state.bri(254).xy(...xy);
+      return state.xy(...xy);
     });
   }
 
