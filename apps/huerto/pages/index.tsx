@@ -8,8 +8,9 @@ import {
   useImageData,
   useMousePosition,
   ColorSpaceGrid,
-  RGBA,
   useAllLightsColorSelection,
+  Cursor,
+  CursorPosition,
 } from '~/frontend';
 import imageUrl from '~/frontend/assets/CIExy1931-pristine-crop.png';
 
@@ -101,42 +102,8 @@ const CIE1933: React.FC = props => {
   );
 };
 
-type ClientPosition = Record<`client${'X' | 'Y'}`, number>;
-
-const Cursor: React.FC<{
-  position: ClientPosition;
-  rgba: RGBA;
-  onClick?: React.MouseEventHandler;
-}> = ({ position, rgba, onClick }) => {
-  return (
-    <Box
-      cursor="none"
-      userSelect="none"
-      position="fixed"
-      zIndex={Layer.Cursor}
-      minWidth="1rem"
-      minHeight="2rem"
-      backgroundColor="#000"
-      borderRadius=".25rem"
-      color="#000"
-      transform="translate(-50%, -50%)"
-      whiteSpace="nowrap"
-      border=".09375rem solid #FFFA"
-      boxShadow={`0 0 .5rem -.125rem rgba(${rgba}),  0 0 0 .5px #FFFA, 0 .0625rem .25rem -0.125rem #000B`}
-      transition="transform ease-out 45ms"
-      style={{
-        transform: `translate(${position.clientX}px, ${position.clientY}px) translate(-50%, -50%)`,
-        left: 0,
-        top: 0,
-        backgroundColor: `rgba(${rgba})`,
-      }}
-      onClick={onClick}
-    ></Box>
-  );
-};
-
 const xyFromDocumentPosition = (
-  position: ClientPosition,
+  position: CursorPosition,
   dxy?: number | [number, number],
 ): [number, number] => {
   const [dx = 1, dy = 1] = Array.isArray(dxy) ? dxy : [dxy, dxy];
