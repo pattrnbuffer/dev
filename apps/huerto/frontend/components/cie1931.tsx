@@ -1,64 +1,39 @@
-import type { NextPage } from 'next';
-import Head from 'next/head';
+import React, { useCallback, useState, useRef } from 'react';
 import Image from 'next/image';
-import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { Box } from '@chakra-ui/react';
-import {
-  Layer,
-  useImageData,
-  useMousePosition,
-  ColorSpaceGrid,
-  useAllLightsColorSelection,
-  Cursor,
-  CursorPosition,
-  CIE1931,
-} from '~/frontend';
+
+import { Layer } from '~/frontend/layer';
+import { useImageData, useMousePosition, XY } from '~/frontend/hooks';
+import { useAllLightsColorSelection } from '~/frontend/providers';
+
+import { Cursor, CursorPosition } from './cursor';
+import { ColorSpaceGrid } from './color-space-grid';
+
 import imageUrl from '~/frontend/assets/CIExy1931-pristine-crop.png';
 
-export { Home as default };
-const Home: NextPage = () => {
-  return (
-    <>
-      <Head>
-        <title>👻</title>
-      </Head>
-      <Box
-        width="100vw"
-        height="100vh"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-      >
-        <CIE1931 />
-      </Box>
-    </>
-  );
-};
+const imageId = 'CIE1933:image';
 
 /**
  * https://company235.com/tools/colour/cie.html
  */
-const CIE1933: React.FC = props => {
+export const CIE1931: React.FC = props => {
   if (typeof window === 'undefined') {
     return null;
   }
-
-  const imageId = 'CIE1933:image';
-  const [selection, setSelection] = useState<[number, number]>();
-  const [debug, setDebug] = useState({
-    canvas: false,
-    grid: false,
-  });
+  const canvasRef = useRef<HTMLCanvasElement>();
   const position = useMousePosition();
 
-  const canvasRef = useRef<HTMLCanvasElement>();
+  const [debug, setDebug] = useState({ canvas: false, grid: false });
+  const [selection, setSelection] = useState<XY>();
   const [rgba, rgbaFor] = useImageData(
     document.getElementById(imageId) as HTMLImageElement | undefined,
     xyFromDocumentPosition(position),
+    [0.8, 0.8],
     canvasRef.current,
   );
 
-  useAllLightsColorSelection(selection);
+  // TODO: display current state
+  const _currentState = useAllLightsColorSelection(selection);
 
   return (
     <>
