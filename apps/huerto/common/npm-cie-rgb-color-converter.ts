@@ -89,11 +89,11 @@ export class ColorConverter {
 
     let colorGamut = ColorConverter.getLightColorGamutRange(modelId);
 
-    // @ts-expect-error: this is not the way
+    // this is not the way
     red = parseFloat(red / 255);
-    // @ts-expect-error: this is not the way
+    // this is not the way
     green = parseFloat(green / 255);
-    // @ts-expect-error: this is not the way
+    // this is not the way
     blue = parseFloat(blue / 255);
 
     red = getGammaCorrectedValue(red);

@@ -1,19 +1,19 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  useRef,
-  useLayoutEffect,
-} from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { Box } from '@chakra-ui/react';
-import { ColorConverter } from '~/common';
-import { useImageData, useMousePosition, ColorSpaceGrid } from '~/frontend';
-import imageUrl from '~/frontend/assets/PlanckianLocusCropped.png';
+import {
+  Layer,
+  useImageData,
+  useMousePosition,
+  ColorSpaceGrid,
+  RGBA,
+  useAllLightsColorSelection,
+} from '~/frontend';
+import imageUrl from '~/frontend/assets/CIExy1931-pristine-crop.png';
 
+export { Home as default };
 const Home: NextPage = () => {
   return (
     <>
@@ -33,78 +33,118 @@ const Home: NextPage = () => {
   );
 };
 
+/**
+ * https://company235.com/tools/colour/cie.html
+ */
 const CIE1933: React.FC = props => {
   if (typeof window === 'undefined') {
     return null;
   }
+
+  const imageId = 'CIE1933:image';
   const [selection, setSelection] = useState<[number, number]>();
-
+  const [debug, setDebug] = useState({
+    canvas: false,
+    grid: false,
+  });
   const position = useMousePosition();
-  const [x, y] = xyFromDocumentPosition(position);
 
-  useEffect(() => {
-    if (selection == null) return;
-    const [x, y] = selection;
-
-    fetch(`/api/hue/all-lights-color/${x}/${y}`);
-  }, [selection]);
-
-  const [rgba, convert] = useImageData(
-    document.getElementById('CIEImage') as HTMLImageElement | undefined,
-    [x, y],
+  const canvasRef = useRef<HTMLCanvasElement>();
+  const [rgba, rgbaFor] = useImageData(
+    document.getElementById(imageId) as HTMLImageElement | undefined,
+    xyFromDocumentPosition(position),
+    canvasRef.current,
   );
+
+  useAllLightsColorSelection(selection);
 
   return (
-    <Box display="flex" alignItems="center" justifyContent="center" flex="auto">
-      <Image id="CIEImage" src={imageUrl} layout="fill" />
-      <ColorSpaceGrid
-        count={50}
-        convert={useCallback(xy => `rgb(${convert(xy).join(',')})`, [convert])}
-      />
+    <>
       <Box
-        position="fixed"
-        zIndex={2}
-        minWidth="1rem"
-        minHeight="2rem"
-        backgroundColor="#000"
-        borderRadius=".25rem"
-        color="#000"
-        transform="translate(-50%, -50%)"
-        whiteSpace="nowrap"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        flex="auto"
         cursor="none"
-        style={{
-          left: `${position.clientX}px`,
-          top: `${position.clientY}px`,
-          backgroundColor: `rgb(${rgba.join(',')})`,
-        }}
+        userSelect="none"
+      >
+        <Image id={imageId} src={imageUrl} layout="fill" />
+
+        {debug.canvas && (
+          <canvas
+            ref={canvas => {
+              canvasRef.current = canvas ?? undefined;
+            }}
+            style={{
+              position: 'fixed',
+              top: '.5rem',
+              left: 0,
+              zIndex: Layer.Debug,
+              opacity: 0.5,
+            }}
+          />
+        )}
+
+        {debug.grid && (
+          <ColorSpaceGrid
+            convert={useCallback(xy => `rgba(${rgbaFor(xy)})`, [rgbaFor])}
+          />
+        )}
+      </Box>
+
+      <Cursor
+        position={position}
+        rgba={rgba}
         onClick={event => setSelection(xyFromDocumentPosition(event))}
-      ></Box>
-    </Box>
+      />
+    </>
   );
 };
 
-export default Home;
+type ClientPosition = Record<`client${'X' | 'Y'}`, number>;
+
+const Cursor: React.FC<{
+  position: ClientPosition;
+  rgba: RGBA;
+  onClick?: React.MouseEventHandler;
+}> = ({ position, rgba, onClick }) => {
+  return (
+    <Box
+      cursor="none"
+      userSelect="none"
+      position="fixed"
+      zIndex={Layer.Cursor}
+      minWidth="1rem"
+      minHeight="2rem"
+      backgroundColor="#000"
+      borderRadius=".25rem"
+      color="#000"
+      transform="translate(-50%, -50%)"
+      whiteSpace="nowrap"
+      border=".09375rem solid #FFFA"
+      boxShadow={`0 0 .5rem -.125rem rgba(${rgba}),  0 0 0 .5px #FFFA, 0 .0625rem .25rem -0.125rem #000B`}
+      transition="transform ease-out 45ms"
+      style={{
+        transform: `translate(${position.clientX}px, ${position.clientY}px) translate(-50%, -50%)`,
+        left: 0,
+        top: 0,
+        backgroundColor: `rgba(${rgba})`,
+      }}
+      onClick={onClick}
+    ></Box>
+  );
+};
 
 const xyFromDocumentPosition = (
-  position: Record<`client${'X' | 'Y'}`, number>,
+  position: ClientPosition,
+  dxy?: number | [number, number],
 ): [number, number] => {
-  if (typeof document === 'undefined') return [0, 0];
+  const [dx = 1, dy = 1] = Array.isArray(dxy) ? dxy : [dxy, dxy];
 
-  const x = 0.8 * (position.clientX / document.body.clientWidth);
+  const x = position.clientX / document.body.clientWidth;
   const y =
-    0.9 *
-    ((document.body.clientHeight - position.clientY) /
-      document.body.clientHeight);
+    (document.body.clientHeight - position.clientY) /
+    document.body.clientHeight;
 
-  return [x, y];
-};
-
-const xyRGB = ([x, y]: [number, number]) => {
-  const color = ColorConverter.xyBriToRgb(
-    x * 0.79 + 0.025,
-    y * 0.81 + 0.055,
-    255,
-  );
-
-  return [color.r, color.g, color.b];
+  return [x * dx, y * dy];
 };
