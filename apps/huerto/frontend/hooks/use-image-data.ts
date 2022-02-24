@@ -4,15 +4,28 @@ export type XY = [number, number];
 export type RGBA = [number, number, number, number];
 export type RGBAFor = (xy: XY) => RGBA;
 
-// Magic numbers to scale the image down for accuracy?
-const [SX, SY] = [0.8, 0.8];
+const fallback = {
+  // TODO: choose a pleasant default
+  xy: [0.5, 0.5] as XY,
+  // Magic numbers to scale the image down for correct sampling?
+  sxy: [0.8, 0.8] as XY,
+  rgba: [255, 255, 255, 0] as RGBA,
+};
+
 export function useImageData(
   image: HTMLImageElement | undefined,
   xy?: XY,
-  // to verify source content is rendered properly
+  // TODO: this is a convienence, remove it
+  sxy?: XY,
+  // used to verify source content is rendered properly
   target?: HTMLCanvasElement,
 ): [RGBA, RGBAFor] {
-  const [x, y] = (xy ?? [0, 0]).map((v = 0) => Math.max(0, Math.min(v, 1)));
+  const [x, y] =
+    !xy?.length || xy?.some?.(Number.isNaN)
+      ? fallback.xy
+      : xy.map(v => Math.max(0, Math.min(v, 1)));
+
+  const [SX, SY] = !sxy?.length ? fallback.sxy : sxy;
 
   const canvas = useMemo(
     () => target ?? document.createElement('canvas'),
@@ -48,7 +61,7 @@ export function useImageData(
     useMemo(() => canvasPixelFor(canvas, [x, y]), [canvas, x, y]),
     useCallback(
       (xy: XY) => {
-        return canvas ? canvasPixelFor(canvas, xy) : [255, 255, 255, 0];
+        return canvas ? canvasPixelFor(canvas, xy) : fallback.rgba;
       },
       [canvas],
     ),
@@ -58,10 +71,9 @@ export function useImageData(
 const canvasPixelFor = (canvas: HTMLCanvasElement | undefined, [x, y]: XY) => {
   const lx = x * (canvas?.width ?? 0);
   const ly = (1 - y) * (canvas?.height ?? 0);
+  const pixel = canvas
+    ?.getContext('2d')
+    ?.getImageData(lx * 0.8, ly * 0.8, 1, 1).data;
 
-  return <RGBA>(
-    (canvas?.getContext('2d')?.getImageData(lx * 0.8, ly * 0.8, 1, 1).data ?? [
-      0, 0, 0, 0,
-    ])
-  );
+  return <RGBA>(pixel ?? fallback.rgba);
 };
