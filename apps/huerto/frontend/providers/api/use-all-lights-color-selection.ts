@@ -1,18 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useAllLightsColorSelection(selection?: [number, number]) {
+  const [state, setState] = useState<[number, number]>();
   useEffect(() => {
     if (selection?.length) {
       let [x, y] = selection.map(v => round(v));
 
-      x = Math.min(x * 1.2, 1);
-      y = Math.min(y * 0.85, 1);
+      x = Math.min(x, 1);
+      y = Math.min(y, 1);
 
-      fetch(`/api/hue/all-lights-color/${x}/${y}`);
+      // TODO: useMountedState from @dev/hooks
+      fetch(`/api/hue/all-lights-color/${x}/${y}`).then(() =>
+        setState(selection),
+      );
     }
   }, [selection]);
+
+  return state;
 }
 
-function round(value, degree = 100) {
+function round(value: number, degree = 1000) {
   return Math.round(value * degree) / degree;
 }
