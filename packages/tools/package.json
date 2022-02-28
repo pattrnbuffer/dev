@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/pattrnbuffer/dev/issues"
   },
-  "homepage": "https://github.com/pattrnbuffer/dev#readme"
+  "homepage": "https://github.com/pattrnbuffer/dev#readme",
+  "dependencies": {
+    "@mobily/ts-belt": "^3.9.0"
+  }
 }
