@@ -8,3 +8,9 @@ export async function promptFor<R, T extends string = string>(
 
   return answer as R;
 }
+
+export function promptType<K extends string, V extends PromptObject<K>>(
+  prompt: V,
+) {
+  return prompt;
+}
