@@ -18,5 +18,9 @@
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "dependencies": {
     "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@dev/preset": "workspace:^",
+    "typescript": "^4.6.2"
   }
 }

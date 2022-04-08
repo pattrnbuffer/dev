@@ -1,3 +1,5 @@
+#! /usr/bin/env zsh
+
 PKG_DIR=$(yarn -q dlx pkg-dir-cli)
 GEN_PATH="backend/open-weather"
 ABS_PATH="$PKG_DIR/$GEN_PATH"

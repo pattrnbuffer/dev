@@ -1,6 +1,1 @@
-export const config = {
-  notion: {
-    token: process.env.NOTION_TOKEN as string,
-    database_id: process.env.NOTION_DB_ID as string,
-  },
-};
+export const DB_PATH = process.env.DB_PATH ?? '__MISSING__DB_PATH__';

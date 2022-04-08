@@ -4,5 +4,37 @@
     "**/.pnp.*": true
   },
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
+  // "typescript.enablePromptUseWorkspaceTsdk": true,
+  "files.exclude": {
+    "**/node_modules": false,
+    "**/.gitkeep": true,
+    // ".yarn": true,
+    // ".vscode": true,
+    // "**/layer": true,
+    // "packages": true,
+    // "services": true,
+    // "support": true,
+    // "tools": true
+  },
+  "workspace.isHidden": true,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#f4c156",
+    "activityBar.activeBorder": "#0a9668",
+    "activityBar.background": "#f4c156",
+    "activityBar.foreground": "#15202b",
+    "activityBar.inactiveForeground": "#15202b99",
+    "activityBarBadge.background": "#0a9668",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "sash.hoverBorder": "#f4c156",
+    "statusBar.background": "#f1b026",
+    "statusBar.foreground": "#15202b",
+    "statusBarItem.hoverBackground": "#d6960e",
+    "statusBarItem.remoteBackground": "#f1b026",
+    "statusBarItem.remoteForeground": "#15202b",
+    "titleBar.activeBackground": "#f1b026",
+    "titleBar.activeForeground": "#15202b",
+    "titleBar.inactiveBackground": "#f1b02699",
+    "titleBar.inactiveForeground": "#15202b99"
+  },
+  "peacock.color": "#f1b026",
 }

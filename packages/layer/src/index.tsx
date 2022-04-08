@@ -12,12 +12,14 @@ import {
   useMemo,
 } from 'react';
 
-
-
-export type LayerContextValue<Action, Data extends LayerData<unknown> = LayerData<unknown>, Domain extends LayerDomain<unknown> = LayerDomain<unknown>> = {
-  domain: Domain,
-  data: Data,
-  LayerMeta
+export type LayerContextValue<
+  Action,
+  Data extends LayerData<unknown> = LayerData<unknown>,
+  Domain extends LayerDomain<unknown> = LayerDomain<unknown>,
+> = {
+  domain: Domain;
+  data: Data;
+  meta: LayerMeta<{}>;
   dispatch: Dispatch<Action> & {
     (action: Action, context: LayerContextValue<Action, Data, Domain>): void;
   };
@@ -25,46 +27,54 @@ export type LayerContextValue<Action, Data extends LayerData<unknown> = LayerDat
 
 type LayerDomain<T extends unknown> = T & {
   name: string;
-}
+};
 
 type LayerData<T extends unknown> = T & {
   name: string;
-}
+};
 
 type LayerMeta<T> = T & {
   id: string;
-}
+};
 
-type LayerReducer<S, A, C extends LayerContextValue<A> = LayerContextValue<A>> = (state: S, action: A, context: C) => S
+type LayerReducer<
+  S,
+  A,
+  C extends LayerContextValue<A> = LayerContextValue<A>,
+> = (state: S, action: A, context: C) => S;
 
 type ReducerReturnValue = {
   id: string;
   name: string;
 };
 
-
-
-
-export function createLayerDomain<S, T, C extends LayerContextValue<T> = LayerContextValue<T>>(domain: LayerDomain) {
+export function createLayerDomain<
+  S,
+  T,
+  C extends LayerContextValue<T> = LayerContextValue<T>,
+>() {
   const LayerProvider = (data: LayerData<unknown>) => {
-    const layer = useMemo((): C => ({
-      data,
-      domain,
-      meta: {
-        name
-      }
-    }), [input]);
+    const layer = useMemo(
+      (): C => ({
+        data,
+        domain,
+        meta: {
+          name,
+        },
+      }),
+      [input],
+    );
     return <LayerContext.Provider value={layer}> </LayerContext.Provider>;
   };
 
   const useLayerReducer = (
-    reducer: LayerReducer<S, T, C>
+    reducer: LayerReducer<S, T, C>,
   ): [ReducerReturnValue, Dispatch<T>] => {
     const context = useContext(LayerContext);
 
     const [layer, dispatch] = useReducer(
-      (state: S, action: T) => reducer(state, action, context)
-      {}
+      (state: S, action: T) => reducer(state, action, context),
+      {},
     );
 
     const dispatcher = useCallback(
@@ -75,17 +85,17 @@ export function createLayerDomain<S, T, C extends LayerContextValue<T> = LayerCo
           context.dispatch(action, layer);
         }
       },
-      [dispatch, context.dispatch]
+      [dispatch, context.dispatch],
     );
 
     return [layer.meta, dispatcher];
   };
 
   const LayerContext = createContext<LayerContextValue<T>>({
-    name: "root",
+    name: 'root',
     dispatch() {
       throw new Error(
-        'No layer context found, please add a LayerContext.Provider'
+        'No layer context found, please add a LayerContext.Provider',
       );
     },
   });

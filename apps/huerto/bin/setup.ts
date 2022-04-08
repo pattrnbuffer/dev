@@ -3,7 +3,7 @@ import * as fs from 'fs/promises';
 import prompts from 'prompts';
 import * as idiots from '@dev/node-hue-api';
 import * as pkg from '../package.json';
-import { all, siphon } from '../common';
+import { prom } from '../common';
 
 type Bridge = Awaited<ReturnType<typeof idiots.discovery.nupnpSearch>>[number];
 
@@ -33,7 +33,7 @@ async function main() {
     (ip: string) => allBridges.find(v => ip === v.ipaddress) as Bridge,
   );
 
-  const [{ pushed }, links] = await siphon(
+  const [{ pushed }, links] = await prom.follow(
     prompts({
       name: 'pushed',
       type: 'toggle',
@@ -42,7 +42,7 @@ async function main() {
       inactive: "I couldn't push them 😔",
     }),
     ref =>
-      all(included, async bridge => {
+      prom.all(included, async bridge => {
         let error = false;
 
         while (!ref.current?.pushed || (ref.current?.pushed && !error)) {

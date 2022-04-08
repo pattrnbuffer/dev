@@ -12,14 +12,19 @@ export type PromptReturnObject<
 export type PromptReturn<V extends PromptObject = PromptObject<any>> =
   V['format'] extends () => infer R ? R : any;
 
-export type XYReturnType = PromptReturnObject<typeof xy>;
+export type XYReturnObject = PromptReturnObject<typeof xy>;
+export type XYReturnValue = void | [number, number];
+
 export const xy = create({
   name: 'xy',
   type: 'text',
   message: 'x, y',
-  format: (text: string): [number, number] => {
-    const [x = '5', y = x] = text.match(/(\d+)/g) ?? ([] as string[]);
-    return [Number(`0.${x}`), Number(`0.${y}`)];
+  format(text: string): XYReturnValue {
+    if (text?.length > 0) {
+      const [x = '5', y = x] = text.match(/(\d+)/g) ?? ([] as string[]);
+
+      return [Number(`0.${x}`), Number(`0.${y}`)];
+    }
   },
 });
 

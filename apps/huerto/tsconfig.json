@@ -22,15 +22,20 @@
     "paths": {
       "~/*": [
         "./*"
-      ]
+      ],
     }
   },
   "include": [
+    "../../packages/**/*.ts",
+    "../../packages/**/*.tsx",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "ts-node": {
+    "swc": true
+  }
 }

@@ -1,22 +1,37 @@
-import type { NextPage } from 'next';
+import type {
+  NextPage,
+  GetServerSideProps,
+  InferGetServerSidePropsType,
+} from 'next';
 import Head from 'next/head';
 import useSWR from 'swr';
-import { Box } from '@chakra-ui/react';
+import { Box, BoxProps, Heading, Text } from '@chakra-ui/react';
+import { Database } from '~/common';
+import { resolveOrdinaryDatabase } from './api/ordinary.db';
 
-const fetcher = (url: string) => fetch(url).then(r => r.json());
+export { Regimen as default, getServerSideProps };
 
-const Home: NextPage = () => {
-  const { data } = useSWR('/api/ordinary.db', fetcher);
+type RegimenProps = InferGetServerSidePropsType<typeof getServerSideProps>;
 
-  console.log({ data });
+const Regimen: NextPage<RegimenProps> = ({ database, pages }) => {
   return (
     <>
       <Head>
         <title>regimen</title>
       </Head>
-      <Box as="pre">{JSON.stringify(data, null, 2)}</Box>
+      <Row>
+        <Heading>{database.title[0].text.content}</Heading>
+      </Row>
     </>
   );
 };
 
-export default Home;
+const getServerSideProps: GetServerSideProps = async context => {
+  return {
+    props: await resolveOrdinaryDatabase(),
+  };
+};
+
+const Row: React.FC<BoxProps> = props => (
+  <Box minWidth="100%" maxWidth="" {...props} />
+);

@@ -1,6 +1,5 @@
 #! /usr/bin/env yarn ts-node
 
-import prompts from 'prompts';
 import { all } from '../common';
 import { Links, Link } from './links';
 import { Connections, LinkConnected } from './connections';

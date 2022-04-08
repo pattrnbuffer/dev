@@ -1,13 +1,12 @@
 #! /usr/bin/env yarn ts-node
 
-import { inspect } from 'util';
-import prompts from 'prompts';
-import { all } from '../common';
 import { v3 } from '@dev/node-hue-api';
 import { Links, Link } from './links';
 import { Lights, LightLink } from './lights';
 import { LightsState, Promisable } from './types';
-import { colorPrompt, XYReturnType } from './colors.prompts';
+import { colorPrompt, XYReturnValue } from './colors.prompts';
+import { promptFor } from '@dev/prompts';
+import { mapPromise } from '@dev/tools';
 
 export const Color = {
   set: setColorForAllLights,
@@ -20,32 +19,16 @@ async function main() {
 
   let states: ColorLink[] = [];
 
-  for (
-    let state = { loop: true };
-    state.loop;
-    state = await prompts({
-      name: 'loop',
-      type: 'confirm',
-      message: 'continue?',
-      initial: true,
+  while (
+    await promptFor<undefined | XYReturnValue>(colorPrompt.xy, {
+      async onSubmit(_, answer?: XYReturnValue) {
+        if (answer == null || !answer.length) return true;
+
+        states = await setColorForAllLights(links, async state => {
+          return state.xy(...answer);
+        });
+      },
     })
-  ) {
-    const { xy } = (await prompts(colorPrompt.xy)) as XYReturnType;
-
-    states = await setColorForAllLights(links, async state => {
-      return state.xy(...xy);
-    });
-  }
-
-  console.log(
-    inspect(
-      // @ts-expect-error: idiots api doesn't publicly expose the
-      //                   light state on a class called light state
-      states.map(({ state }) => state._state),
-      false,
-      6,
-      true,
-    ),
   );
 }
 
@@ -63,7 +46,7 @@ export async function setColorForAllLights(
   resolve: (state: LightsState, link: LightLink) => Promisable<LightsState>,
 ): Promise<ColorLink[]> {
   const allLights = await Lights.all(links);
-  const result = await all(allLights, async ({ light, link }) => {
+  const result = await mapPromise(allLights, async ({ light, link }) => {
     const state = await resolve(new v3.lightStates.LightState(), {
       light,
       link,

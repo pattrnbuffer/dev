@@ -24,5 +24,8 @@
   },
   "dependencies": {
     "@dev/preset": "workspace:^"
+  },
+  "volta": {
+    "node": "16.14.0"
   }
 }

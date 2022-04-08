@@ -1,6 +1,7 @@
 import { Client } from '@notionhq/client';
 import { config } from '~/backend/config';
 import { cache } from '~/backend/cache';
+import { foxy } from '~/common';
 
 const client = new Client({
   auth: config.notion.token,
@@ -12,20 +13,16 @@ type DatabaseQuery = Awaited<
   ReturnType<typeof Client.prototype.databases.query>
 >;
 
+const all = async () => {
+  const { results } = await client.search({
+    filter: { property: 'object', value: 'database' },
+  });
+
+  return results;
+};
+
 const db = {
-  all: cache.resolveForMany('database', async () => {
-    const list = await client.search({
-      filter: { property: 'object', value: 'database' },
-    });
-
-    return list.results as unknown[] as Database[];
-  }),
-
-  one: cache.resolveFor('database', async (id: string) =>
-    client.databases.retrieve({
-      database_id: id,
-    }),
-  ),
+  all,
 
   pages: cache.resolveForMany('page', async (id: string) => {
     const queries = await drain(

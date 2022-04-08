@@ -2,7 +2,7 @@
 
 import * as idiots from '@dev/node-hue-api';
 import got from 'got';
-import { all, siphon } from '../common';
+import { all } from '../common';
 import { Links, Link, LinkCreated } from './links';
 import { API } from './types';
 

@@ -6,6 +6,9 @@
     "lib": [
       "es2021"
     ],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
   }
 }

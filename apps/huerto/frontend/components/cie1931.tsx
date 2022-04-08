@@ -3,9 +3,10 @@ import Image from 'next/image';
 import { Box } from '@chakra-ui/react';
 
 import { Layer } from '~/frontend/layer';
-import { useImageData, useMousePosition, XY } from '~/frontend/hooks';
+import { useImageData, useMousePosition, XY, RGBA } from '~/frontend/hooks';
 import { useAllLightsColorSelection } from '~/frontend/providers';
 
+import { Swatch } from './swatch';
 import { Cursor, CursorPosition } from './cursor';
 import { ColorSpaceGrid } from './color-space-grid';
 
@@ -33,10 +34,24 @@ export const CIE1931: React.FC = props => {
   );
 
   // TODO: display current state
-  const _currentState = useAllLightsColorSelection(selection);
+  const currentState = useAllLightsColorSelection(selection);
 
   return (
     <>
+      <Swatch
+        rgba={currentState ? rgbaFor(currentState) : [0, 0, 0, 0.075]}
+        position="fixed"
+        bottom="calc(1vh + 1vw)"
+        right="calc(1vh + 1vw)"
+        zIndex={3}
+      />
+
+      <Cursor
+        position={position}
+        rgba={rgba}
+        onClick={event => setSelection(xyFromDocumentPosition(event))}
+      />
+
       <Box
         display="flex"
         alignItems="center"
@@ -68,14 +83,12 @@ export const CIE1931: React.FC = props => {
           />
         )}
       </Box>
-
-      <Cursor
-        position={position}
-        rgba={rgba}
-        onClick={event => setSelection(xyFromDocumentPosition(event))}
-      />
     </>
   );
+};
+
+const CurrentColor: React.FC<{ rgba?: RGBA }> = ({ rgba = [0, 0, 0, 0] }) => {
+  return <Swatch rgba={rgba} position="fixed" top="1rem " right="1rem" />;
 };
 
 const xyFromDocumentPosition = (
@@ -90,4 +103,12 @@ const xyFromDocumentPosition = (
     document.body.clientHeight;
 
   return [x * dx, y * dy];
+};
+
+const documentPositionFromXY = ([x, y]: XY) => {
+  const clientX = x * document.body.clientWidth;
+  // TODO: invert: 1 - y somehow
+  const clientY = document.body.clientHeight - y * document.body.clientHeight;
+
+  return { clientX, clientY };
 };
