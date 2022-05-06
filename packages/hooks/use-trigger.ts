@@ -1,13 +1,14 @@
-import {
-  useEffect,
-  useCallback,
-  useState,
-  EffectCallback,
-  DependencyList,
-} from 'react';
+import { useCallback, useState, DependencyList } from 'react';
+import { useMetaEffect, MetaEffectCallback } from './use-meta-effect';
 
-export function useTrigger(effect: EffectCallback, deps: DependencyList = []) {
+export function useTrigger<T>(
+  effect: MetaEffectCallback<T>,
+  deps: DependencyList = [],
+) {
   const [fire, setFire] = useState(0);
-  useEffect(effect, [fire, ...deps]);
-  return useCallback(() => setFire(pulls => pulls + 1), []);
+
+  return [
+    useMetaEffect(effect, [fire, ...deps]),
+    useCallback(() => setFire(pulls => pulls + 1), []),
+  ] as const;
 }
