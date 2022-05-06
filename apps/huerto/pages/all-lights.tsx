@@ -1,22 +1,16 @@
+import { Box, Heading, Text } from '@chakra-ui/react';
+import { useMountedEffect } from '@dev/hooks';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import React, {
-  useEffect,
-  useMemo,
-  useState,
-  VoidFunctionComponent,
-} from 'react';
-import filter from 'lodash/filter';
-import { Box, Text, Heading } from '@chakra-ui/react';
-import { useInterval, useMountedEffect, useMountedRef } from '@dev/hooks';
-import { useAllLights, AllLightsResult } from '~/frontend';
+import React, { useMemo, VoidFunctionComponent } from 'react';
 import { ColorConverter } from '~/common/npm-cie-rgb-color-converter';
+import { AllLightsResult, useAllLights } from '~/frontend';
 import {
+  LightState,
+  toLightStateFromCommand,
   useLightState,
   UseLightStateProps,
   UseLightStateResponse,
-  LightState,
-  toLightStateFromCommand,
 } from '~/frontend/providers/api/use-light-state';
 
 const Lights: NextPage = () => {
@@ -174,18 +168,6 @@ const LightBox: VoidFunctionComponent<
     </Box>
   );
 };
-
-function mergeState(
-  source: { id: string | number; state: any },
-  response?: UseLightStateResponse,
-) {
-  const flattered = (response?.data ?? [])
-    ?.map(v => v.results.filter(res => source.id === res.id))
-    ?.map(v => v.map(v => v.state))
-    ?.flat(2);
-
-  return Object.assign({}, source.state, ...flattered);
-}
 
 function rgbForLightState(state: {
   on: boolean;

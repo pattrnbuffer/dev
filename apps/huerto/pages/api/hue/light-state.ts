@@ -5,7 +5,7 @@ import { v3 } from '@dev/node-hue-api';
 
 import { Lights } from '~/bin/lights';
 import { Links } from '~/bin/links';
-import { mapPromise } from '~/../../packages/tools/build';
+import { func, mapPromise } from '~/../../packages/tools/build';
 
 export type LightStateRequest = {
   command: LightStateCommand;
@@ -21,17 +21,22 @@ export type LightStateCommand = {
   effect?: 'none' | 'colorloop';
   alert?: 'none' | 'select' | 'lselect';
   transition?: number;
+  bri?: number;
+  hue?: number;
+  sat?: number;
+  ct?: number;
 
-  brightness?: number;
-  bri: number;
-  bri_inc?: number;
-  hue: number;
-  hue_inc?: number;
-  saturation?: number;
-  sat: number;
-  sat_inc?: number;
-  ct: number;
-  ct_inc?: number;
+  // doubting the value of supporting the following
+  // should decide based on the original API
+  /** @deprecated */ brightness?: number;
+  /** @deprecated */ saturation?: number;
+
+  // questioning whether the unpredictable application
+  // of a relative value will be a desirable side effect
+  /** @deprecated */ bri_inc?: number;
+  /** @deprecated */ hue_inc?: number;
+  /** @deprecated */ sat_inc?: number;
+  /** @deprecated */ ct_inc?: number;
 } & Partial<
   | {}
   | { hsb: [number, number, number] }
@@ -39,7 +44,7 @@ export type LightStateCommand = {
   | { rgb: [number, number, number] }
   | { white: [number, number] }
   | { xy: [number, number] }
-  | { xy_inc: number }
+  | { /** @deprecated */ xy_inc: number }
 >;
 
 export type LightState = {
@@ -84,13 +89,7 @@ async function resolveLightStateRequest(requests: LightStateRequest) {
 
     const results = await mapPromise(targets, async ({ light, link }) => {
       const succeeded = await link.api.lights.setLightState(light.id, state);
-      console.log(
-        succeeded,
-        toLightState(light.state),
-        toLightState(state),
-        // @ts-ignore
-        state._state,
-      );
+
       return succeeded
         ? {
             type: 'light-state:updated',
@@ -122,26 +121,11 @@ function mapRequestStates(requests: LightStateRequest) {
         const method = light[key];
         const input = request.command[key];
         const params = Array.isArray(input) ? input : [input];
-        return apply(method, params, light) ?? light;
+        return func.apply(method, params, light) ?? light;
       },
       new v3.lightStates.LightState(),
     ),
   }));
-}
-
-function apply<R, T extends (...args: any) => R>(
-  fn: T,
-  params?: unknown,
-  scope?: unknown,
-  fallback?: R,
-) {
-  if (typeof fn === 'function') {
-    try {
-      return fn.apply(scope, Array.isArray(params) ? params : []);
-    } catch (e) {}
-  }
-
-  return fallback;
 }
 
 function toLightState<T extends Record<keyof LightState, any>>(
