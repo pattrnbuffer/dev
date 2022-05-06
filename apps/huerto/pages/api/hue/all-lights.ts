@@ -1,25 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import * as idiots from '@dev/node-hue-api';
+import { Lights } from '~/bin/lights';
+import { Links } from '~/bin/links';
 
-export default async function lights(
+export type AllLightsResponseData = Awaited<
+  ReturnType<typeof resolveAllLights>
+>;
+
+export default async function allLights(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  res.status(200).json(await resolveLights());
+  const result = await resolveAllLights();
+
+  res.status(200).json(result);
 }
 
-export const resolveLights = async () => {
-  const [bridge] = await resolveBridges();
+async function resolveAllLights() {
+  const links = await Links.read();
+  const lights = await Lights.all(links);
 
-  return bridge.lights.getAll();
-};
-
-export const resolveBridges = async () => {
-  const results = await idiots.discovery.nupnpSearch();
-
-  return Promise.all(
-    results.map(bridge =>
-      idiots.api.createLocal(bridge.ipaddress).connect('huerto', 'one'),
-    ),
-  );
-};
+  return lights.map(({ light, link }) => ({
+    bridge: link.bridge.config as NonNullable<typeof link.bridge.config>,
+    light: light['data'],
+  }));
+}
