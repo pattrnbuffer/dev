@@ -1,0 +1,10 @@
+{
+  "extends": "@dev/preset/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "build",
+    "rootDir": "."
+  },
+  "exclude": ["build"]
+}

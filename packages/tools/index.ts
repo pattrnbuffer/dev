@@ -9,6 +9,7 @@ export * from './foxy';
 export * from './object';
 export * from './promise';
 export * from './func';
+export * from './result';
 
 export { boolean as bool } from './boolean';
 export { promise as prom } from './promise';

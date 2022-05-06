@@ -2,8 +2,10 @@
   "name": "@dev/tools",
   "version": "1.0.0",
   "description": "Hammers, saws, and more pure function tools.",
-  "main": "index.ts",
+  "main": "build/index.js",
+  "types": "./build/index.d.ts",
   "scripts": {
+    "build": "rm -rf ./build && tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,7 +18,11 @@
     "url": "https://github.com/pattrnbuffer/dev/issues"
   },
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
+  "devDependencies": {
+    "@dev/preset": "workspace:^",
+    "typescript": "^4.6.2"
+  },
   "dependencies": {
-    "@mobily/ts-belt": "^3.9.0"
+    "@mobily/ts-belt": "^3.11.0"
   }
 }
