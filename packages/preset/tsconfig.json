@@ -4,11 +4,14 @@
   "compilerOptions": {
     "target": "es2021",
     "lib": [
-      "es2021"
+      "es2015.iterable",
+      "ESNext",
+      "es2021",
     ],
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "noImplicitReturns": false
   }
 }
