@@ -15,7 +15,8 @@
     "compile": "tsc",
     "fix": "gts fix",
     "pretest": "npm run compile",
-    "posttest": "npm run lint"
+    "posttest": "npm run lint",
+    "buildup": "app=$0; tool=$1; echo \nbuilding: $tool && yarn workspace \"$tool\" build && echo \nupdating: $app && yarn workspace \"$app\" add \"$tool\" && echo \"Build and loaded $tool into $app\""
   },
   "devDependencies": {
     "@types/node": "^17.0.15",
