@@ -19,10 +19,13 @@ export function useMountedRef() {
       if (state.current) return call();
     };
 
-    mounted.callback =
+    mounted.guard =
       <Args extends any[], Fn extends (...args: Args) => any>(callback: Fn) =>
       (...params: Args) =>
         mounted.commit(() => callback(...params));
+
+    /** @deprecated */
+    mounted.callback = mounted.guard;
 
     return mounted;
   }, []);
