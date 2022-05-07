@@ -35,12 +35,19 @@ export function operate<A, B>(operation: Operator, a?: A, b?: B) {
   if (isNumber(a) && isNumber(b))
     return operation(a, b) as ListOrValue<number, A, B>;
 
-  const al = Array.isArray(a) ? a : [a];
-  const bl = Array.isArray(b) ? b : [b];
+  const alist = Array.isArray(a);
+  const blist = Array.isArray(b);
+  const al = alist ? a : [a];
+  const bl = blist ? b : [b];
 
   const [first, second] = al.length >= bl.length ? [al, bl] : [bl, al];
 
-  const sum = first.map((v, i) => operation(toNumber(v), toNumber(second[i])));
+  const sum = first.map((v, i) => {
+    const ax = !alist ? a : v;
+    const bx = !blist ? b : second[i];
+
+    return operation(ax, bx);
+  });
 
   return (sum.length <= 1 ? sum[0] : sum) as ListOrValue<number, A, B>;
 }
