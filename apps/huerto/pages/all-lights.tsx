@@ -2,16 +2,14 @@ import { Box, Heading, Text } from '@chakra-ui/react';
 import { useMountedEffect } from '@dev/hooks';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import React, { useMemo, VoidFunctionComponent } from 'react';
-import { ColorConverter } from '~/common/npm-cie-rgb-color-converter';
-import { AllLightsResult, useAllLights } from '~/frontend';
+import React, { useMemo } from 'react';
 import {
+  LightBox,
   LightState,
   toLightStateFromCommand,
+  useAllLights,
   useLightState,
-  UseLightStateProps,
-  UseLightStateResponse,
-} from '~/frontend/providers/api/use-light-state';
+} from '~/frontend';
 
 const Lights: NextPage = () => {
   const [history, pushState, remove] = useLightState();
@@ -96,7 +94,7 @@ const Lights: NextPage = () => {
             gridGap="2rem"
             p="2rem"
           >
-            {allLights?.data?.map(({ light, bridge }) => (
+            {allLights?.data?.slice(4, 6).map(({ light, bridge }) => (
               <LightBox
                 key={light.id}
                 light={light}
@@ -122,61 +120,5 @@ const Lights: NextPage = () => {
     </>
   );
 };
-
-const LightBox: VoidFunctionComponent<
-  AllLightsResult[number] & {
-    state: LightState;
-    onChange: (command: UseLightStateProps[number]) => unknown;
-  }
-> = ({ light: { id, name }, bridge, state, onChange }) => {
-  return (
-    <Box
-      flex="1 1 auto"
-      key={id}
-      onClick={() => {
-        onChange({
-          targets: [id].filter(v => v != null),
-          command: { on: !state.on },
-        });
-      }}
-    >
-      <Box
-        display="flex"
-        flexFlow="column nowrap"
-        justifyContent="flex-end"
-        gridRowGap=".25rem"
-        boxShadow={'0 0 0 0.125rem ' + rgbForLightState(state)}
-        minWidth="16rem"
-        minHeight="8rem"
-        p="1rem"
-        borderRadius=".625rem"
-      >
-        <Text fontSize="0.75rem" fontWeight="500">
-          {bridge.name}
-        </Text>
-        <Box flex={1} />
-        <Text
-          fontSize="0.75rem"
-          fontWeight="900"
-          color={state.on ? 'pink' : 'gray'}
-        >
-          {state.on ? 'ON' : 'OFF'}
-        </Text>
-
-        <Text>{name}</Text>
-      </Box>
-    </Box>
-  );
-};
-
-function rgbForLightState(state: {
-  on: boolean;
-  xy: [number, number];
-  bri: number;
-}) {
-  const { r, g, b } = ColorConverter.xyBriToRgb(...state.xy, state.bri);
-
-  return `rgba(${r}, ${g}, ${b}, ${state.on ? 1 : 0.5})`;
-}
 
 export default Lights;

@@ -1,13 +1,11 @@
-import { useCapacitor, useEvent, useAsyncEffect } from '@dev/hooks';
-import { ResultType } from '@dev/tools';
+import { useAsyncEffect, useCapacitor, useEvent } from '@dev/hooks';
+import { number, ResultType } from '@dev/tools';
 import { fetch } from '@evanrs/fetch';
-import { useEffect, useReducer, useState } from 'react';
-
 import type {
+  LightState,
   LightStateCommand,
   LightStateRequest,
   LightStateResponse,
-  LightState,
 } from '~/pages/api/hue/light-state';
 
 export type UseLightStateProps = LightStateRequest;
@@ -111,32 +109,11 @@ export function toLightStateFromCommand(
     const change = command[prop];
 
     Object.assign(state, {
-      [name]: key === '+' ? add(value, change) : change,
+      [name]: key === '+' ? number.add(value, change) : change,
     });
   }
 
   return state;
-}
-
-function add<A = unknown, B = unknown>(a: A, b: B) {
-  const al = Array.isArray(a) ? a : [a];
-  const bl = Array.isArray(b) ? b : [b];
-
-  const [first, second] = al.length >= bl.length ? [al, bl] : [bl, al];
-
-  const sum = first.map((v, i) => toNumber(v) + toNumber(second[i]));
-
-  return (sum.length <= 1 ? sum[0] : sum) as A extends []
-    ? number[]
-    : B extends []
-    ? number[]
-    : number;
-}
-
-function toNumber(v: unknown): number {
-  return typeof v === 'number' && Number.isFinite(v) && !Number.isNaN(v)
-    ? v
-    : 0;
 }
 
 // function useOperation<T, R>(onRequest: (request: T) => Promise<R>) {

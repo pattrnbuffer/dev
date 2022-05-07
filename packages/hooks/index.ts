@@ -6,3 +6,4 @@ export * from './use-referenced-callback';
 export * from './use-trigger';
 export * from './use-event';
 export * from './use-capacitor';
+export * from './use-high-frequency-capacitor';
