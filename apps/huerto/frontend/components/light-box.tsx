@@ -1,7 +1,11 @@
 import { Box, Text } from '@chakra-ui/react';
 import React, { useEffect, useMemo, useRef, useState, VFC } from 'react';
 
-import { useEvent, useHighFrequencyCapacitor } from '@dev/hooks';
+import {
+  useEvent,
+  useHighFrequencyCapacitor,
+  useMountedEffect,
+} from '@dev/hooks';
 import { number as nm } from '@dev/tools';
 
 import { ColorConverter } from '~/common/npm-cie-rgb-color-converter';
@@ -29,11 +33,11 @@ export const LightBox: VFC<
   const update = useMemo(() => {
     const sum = history.reduce((a, b) => nm.add(a, b), [0, 0]);
     const velocity = nm.multiply(sum, history.length);
-    // some quick magic on the ceiling
-    CEILING = nm.operate(
-      (a, b) => (a > CEILING ? a : b > CEILING ? b : CEILING),
-      ...velocity,
-    );
+    // // some quick magic on the ceiling
+    // CEILING = nm.operate(
+    //   (a, b) => (a > CEILING ? a : b > CEILING ? b : CEILING),
+    //   ...velocity,
+    // );
     const ratio = nm.divide(velocity, CEILING);
     const percent = nm.operate(a => Math.trunc(a), nm.multiply(ratio, 100));
     return percent;
@@ -58,7 +62,7 @@ export const LightBox: VFC<
     return createTimeout(() => {
       onUpdate(update);
       remove(() => true);
-    }, 5);
+    }, 30);
   }, [update]);
 
   return (
@@ -152,4 +156,25 @@ function createEventListener<K extends keyof HTMLElementEventMap>(
 function createTimeout(fn: () => unknown, duration: number) {
   const id = setTimeout(fn, duration);
   return () => void clearTimeout(id);
+}
+
+function useTimeout<T = unknown>(
+  onTimeout: (tripped: boolean) => T,
+  duration: number,
+  threshold?: number,
+) {
+  const [result, setResult] = useState<T>();
+  const startedAt = useMemo(() => Date.now(), [result]);
+
+  useMountedEffect(
+    ({ callback }) => {
+      const delta = Date.now() - startedAt;
+      const tripped = nm.typeOf(threshold) && delta > threshold;
+      const done = () => setResult(onTimeout(tripped));
+
+      return tripped ? done() : createTimeout(callback(done), duration);
+    },
+
+    [duration],
+  );
 }
