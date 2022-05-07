@@ -31,9 +31,9 @@ export function divide<A, B>(a: A, b: B) {
   return operate((l, r) => l / r, a, b);
 }
 
-function operate<A = unknown, B = unknown>(operation: Operator, a?: A, b?: B) {
-  // exit for simple case
-  if (isNumber(a) && isNumber(b)) return operation(a, b);
+export function operate<A, B>(operation: Operator, a?: A, b?: B) {
+  if (isNumber(a) && isNumber(b))
+    return operation(a, b) as ListOrValue<number, A, B>;
 
   const al = Array.isArray(a) ? a : [a];
   const bl = Array.isArray(b) ? b : [b];
@@ -45,11 +45,11 @@ function operate<A = unknown, B = unknown>(operation: Operator, a?: A, b?: B) {
   return (sum.length <= 1 ? sum[0] : sum) as ListOrValue<number, A, B>;
 }
 
-export function toNumber(v: unknown): number {
+function toNumber(v: unknown): number {
   return isNumber(v) ? v : 0;
 }
 
-export function isNumber(v: unknown): v is number {
+function isNumber(v: unknown): v is number {
   return typeof v === 'number' && Number.isFinite(v) && !Number.isNaN(v);
 }
 

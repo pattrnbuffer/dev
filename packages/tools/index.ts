@@ -10,6 +10,7 @@ export * from './object';
 export * from './promise';
 export * from './func';
 export * from './result';
+export * from './number';
 
 export { boolean as bool } from './boolean';
 export { promise as prom } from './promise';
