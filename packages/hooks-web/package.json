@@ -1,0 +1,28 @@
+{
+  "name": "@dev/hooks-web",
+  "version": "1.0.0",
+  "description": "The definitive collection of idiomatic hooks 👀",
+  "main": "build/index.js",
+  "types": "./build/index.d.ts",
+  "scripts": {
+    "build": "rm -rf ./build && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pattrnbuffer/dev.git"
+  },
+  "author": "Evan <me@evanrs.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pattrnbuffer/dev/issues"
+  },
+  "homepage": "https://github.com/pattrnbuffer/dev#readme",
+  "devDependencies": {
+    "@dev/preset": "workspace:^",
+    "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "@dev/tools": "workspace:^"
+  }
+}
