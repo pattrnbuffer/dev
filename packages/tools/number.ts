@@ -52,11 +52,11 @@ export function operate<A, B>(operation: Operator, a?: A, b?: B) {
   return (sum.length <= 1 ? sum[0] : sum) as ListOrValue<number, A, B>;
 }
 
-function toNumber(v: unknown): number {
+export function toNumber(v: unknown): number {
   return isNumber(v) ? v : 0;
 }
 
-function isNumber(v: unknown): v is number {
+export function isNumber(v: unknown): v is number {
   return typeof v === 'number' && Number.isFinite(v) && !Number.isNaN(v);
 }
 
