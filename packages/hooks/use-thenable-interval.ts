@@ -20,7 +20,7 @@ export function useInterval(
 
       const promise = new Promise<MountedRef>(next => (resolve = next));
       const id = setInterval(
-        mounted.callback(() => {
+        mounted.guard(() => {
           handler?.(mounted);
           resolve?.(mounted);
         }),
@@ -61,8 +61,8 @@ function thenFor<T>(mounted: MountedRef, promise?: PromiseLike<T>): Then<T> {
       return thenFor(
         mounted,
         promise?.then(
-          mounted.callback((arg: T) => fulfill?.(arg)),
-          mounted.callback((reason: unknown) => reject?.(reason)),
+          mounted.guard((arg: T) => fulfill?.(arg)),
+          mounted.guard((reason: unknown) => reject?.(reason)),
         ),
       );
     },

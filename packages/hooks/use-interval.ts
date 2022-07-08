@@ -16,7 +16,7 @@ export function useInterval(
   const [_, restart] = useTrigger(
     mounted => {
       const id = setInterval(
-        mounted.callback(() => handler?.(mounted)),
+        mounted.guard(() => handler?.(mounted)),
         duration,
       );
 

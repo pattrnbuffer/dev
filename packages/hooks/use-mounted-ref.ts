@@ -24,7 +24,7 @@ export function useMountedRef(deps?: undefined | null | DependencyList) {
   return useMemo(() => createMountedRef(state), []);
 }
 
-export function createMountedRef(state: RefObject<Boolean>) {
+export function createMountedRef(state: RefObject<boolean>) {
   const mounted = () => state.current;
 
   const commit = <R>(call: () => R) => {

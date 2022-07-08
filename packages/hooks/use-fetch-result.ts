@@ -1,3 +1,4 @@
+import { fetch } from '@evanrs/fetch';
 import { useState } from 'react';
 import { useAsyncEffect } from './use-async-effect';
 
@@ -20,8 +21,8 @@ export function useFetchResult<D>(url: string) {
         data: current.data,
       }));
 
-      const response = await fetch(url).catch(() => undefined);
-      const data: D = response?.ok ? await response.json() : undefined;
+      const response = await fetch<D>(url).catch(() => undefined);
+      const data = response?.ok ? await response.json() : undefined;
 
       mounted() &&
         setResult(current => ({

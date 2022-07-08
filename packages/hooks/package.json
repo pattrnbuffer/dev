@@ -23,6 +23,7 @@
     "typescript": "^4.6.2"
   },
   "dependencies": {
-    "@dev/tools": "workspace:^"
+    "@dev/tools": "workspace:^",
+    "@evanrs/fetch": "^0.2.0"
   }
 }

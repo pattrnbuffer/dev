@@ -8,11 +8,12 @@ export type AsyncResponse<D, E = string> =
   | { ok: false; error?: E };
 
 export type AsyncResult<D, E = string> =
-  | { status: 'pending'; data?: D }
-  | { status: 'rejected'; data?: D; error?: E }
-  | { status: 'resolved'; data: D };
-
-export function useAsyncResult<D, E>(
+  | { status: 'pending'; value?: AsyncResponse<D, E>; data?: D }
+  | { status: 'rejected'; value?: AsyncResponse<D, E>; data?: D; error?: E }
+  | { status: 'resolved'; value: AsyncResponse<D, E>; data: D };
+// https://en.wikipedia.org/wiki/Result_type
+// https://adambennett.dev/2020/05/the-result-monad/
+export function useAsyncResult<D, E = unknown>(
   request: AsyncRequest<D, E>,
 ): [result: AsyncResult<D, E>, refresh: () => void] {
   // triggers provide a trivial solution for rerequests
@@ -23,15 +24,27 @@ export function useAsyncResult<D, E>(
 
   useAsyncEffect(
     async mounted => {
-      setResult(({ data }) => ({ status: 'pending', data }));
+      setResult(({ data: data }) => ({ status: 'pending', data: data }));
 
-      const resp = await request().catch(() => undefined);
+      // const resp = await request().catch(() => undefined);
+      const [error, response] = await request()
+        .then(value => [undefined, value] as const)
+        .catch((error: E) => [error, undefined] as const);
 
       mounted() &&
-        setResult(({ data }) =>
-          resp?.ok
-            ? { status: 'resolved', data: resp.data || (data as D) }
-            : { status: 'rejected', data: data, error: resp?.error },
+        setResult(prev =>
+          response?.ok
+            ? {
+                status: 'resolved',
+                value: response,
+                data: response.data,
+              }
+            : {
+                value: response,
+                status: 'rejected',
+                data: prev.data,
+                error: response?.error ?? error,
+              },
         );
     },
     [request, trigger],

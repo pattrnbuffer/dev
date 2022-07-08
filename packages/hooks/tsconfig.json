@@ -4,7 +4,9 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "build",
-    "rootDir": "."
+    "rootDir": ".",
+    "lib": ["DOM"],
+    "jsx": "react-jsx"
   },
-  "exclude": ["build"],
+  "exclude": ["build"]
 }
