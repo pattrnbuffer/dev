@@ -14,7 +14,3 @@ export const redisUpstashClient = new UpstashRedis({
 export const redisAuthAdapter = UpstashRedisAdapter(redisUpstashClient, {
   baseKeyPrefix: process.env.APP_PREFIX as string,
 });
-
-console.log(process.env.REDIS_URL);
-console.log(process.env.REDIS_HTTP_URL);
-console.log(process.env.REDIS_HTTP_TOKEN);
