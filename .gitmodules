@@ -1,6 +1,0 @@
-[submodule "packages/got"]
-	path = packages/got
-	url = git@github.com:sindresorhus/got.git
-[submodule "packages/node-hue-api"]
-	path = packages/node-hue-api
-	url = git@github.com:evanrs/node-hue-api.git

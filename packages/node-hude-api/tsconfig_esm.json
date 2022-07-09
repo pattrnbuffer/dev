@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "es2020",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "outDir": "./dist/esm",
+    "skipLibCheck": true
+  }
+}
