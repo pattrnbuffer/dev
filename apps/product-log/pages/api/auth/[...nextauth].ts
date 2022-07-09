@@ -1,17 +1,13 @@
 import type { NextApiHandler } from 'next';
 import NextAuth from 'next-auth';
 
-import { redisAuthAdapter } from 'lib/redis';
-import { GithubAuthProvider } from 'lib/github';
+import { options } from 'lib/next-auth';
 
 export default <NextApiHandler>((req, res) =>
   NextAuth(req, res, {
-    secret: process.env.NEXTAUTH_SECRET,
-    jwt: { secret: process.env.JWT_SECRET },
+    ...options,
 
-    providers: [GithubAuthProvider],
-    adapter: redisAuthAdapter,
-    session: { strategy: 'database' },
+    debug: true,
 
     callbacks: {
       // TODO review this
@@ -23,6 +19,4 @@ export default <NextApiHandler>((req, res) =>
         return '/';
       },
     },
-
-    debug: process.env.NODE_ENV === 'development',
   }));
