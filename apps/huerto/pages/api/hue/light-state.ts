@@ -5,7 +5,7 @@ import { v3 } from '@dev/node-hue-api';
 
 import { Lights } from '~/bin/lights';
 import { Links } from '~/bin/links';
-import { func, mapPromise } from '~/../../packages/tools/build';
+import { func, mapPromise } from '@dev/tools';
 
 export type LightStateRequest = {
   command: LightStateCommand;

@@ -1,5 +1,5 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
-import { useMountedEffect } from '@dev/hooks';
+import { useMountedEffect, useMountedRef } from '@dev/hooks';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useMemo } from 'react';
@@ -12,6 +12,7 @@ import {
 } from '~/frontend';
 
 const Lights: NextPage = () => {
+  const mounted = useMountedRef();
   const [history, pushState, remove] = useLightState();
   const [allLights, update] = useAllLights();
 
@@ -29,7 +30,7 @@ const Lights: NextPage = () => {
       );
 
       update().then(
-        mounted.callback(() =>
+        mounted.guard(() =>
           remove(({ request }) => batch.some(c => request === c.request)),
         ),
       );
@@ -94,13 +95,13 @@ const Lights: NextPage = () => {
             gridGap="2rem"
             p="2rem"
           >
-            {allLights?.data?.slice(4, 6).map(({ light, bridge }) => (
+            {allLights?.data?.map(({ light, bridge }) => (
               <LightBox
                 key={light.id}
                 light={light}
                 bridge={bridge}
                 state={{ ...light.state, ...stateMap[light.id] }}
-                onChange={command => pushState([command])}
+                onChange={mounted.guard(command => pushState([command]))}
               />
             ))}
           </Box>

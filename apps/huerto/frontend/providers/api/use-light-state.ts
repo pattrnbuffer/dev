@@ -129,7 +129,7 @@ export function toLightStateFromCommand(
 //   >();
 
 //   useEffect(() => {
-//     onRequest(request).then(mounted.callback(op => setOperation()));
+//     onRequest(request).then(mounted.guard(op => setOperation()));
 //   }, [request]);
 
 //   return;
