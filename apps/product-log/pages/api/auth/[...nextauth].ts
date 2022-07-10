@@ -10,12 +10,7 @@ export default <NextApiHandler>((req, res) =>
     debug: true,
 
     callbacks: {
-      // TODO review this
       async redirect(params) {
-        console.log(
-          'NextApiHandler:NextAuth:callbacks:redirect(:params)',
-          params,
-        );
         return '/';
       },
     },
