@@ -1,5 +1,6 @@
 export const app = {
-  clientId: process.env.GITHUB_APP_CLIENT_ID,
-  clientSecret: process.env.GITHUB_APP_CLIENT_SECRET,
+  clientId: <string>process.env.GITHUB_APP_CLIENT_ID,
+  clientSecret: <string>process.env.GITHUB_APP_CLIENT_SECRET,
+  webhookSecret: <string>process.env.GITHUB_APP_WEBHOOK_SECRET,
   scope: ['read:user', 'user:email', 'read:repo'],
 };
