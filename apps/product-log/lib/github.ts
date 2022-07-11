@@ -1,6 +1,5 @@
-import GitHub from 'next-auth/providers/github';
-
-export const GithubAuthProvider = GitHub({
-  clientId: process.env.GITHUB_OAUTH_ID,
-  clientSecret: process.env.GITHUB_OAUTH_SECRET,
-});
+export const app = {
+  clientId: process.env.GITHUB_APP_CLIENT_ID,
+  clientSecret: process.env.GITHUB_APP_CLIENT_SECRET,
+  scope: ['read:user', 'user:email', 'read:repo'],
+};
