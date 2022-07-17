@@ -1,0 +1,29 @@
+{
+  "name": "@dev/typestrict",
+  "version": "1.0.0",
+  "description": "Grow stricter code.",
+  "main": "index.js",
+  "author": "Evan Schneider <me@evanrs.com>",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "typestrict": "./bin/typestrict.mjs",
+    "typestrict-check": "./bin/check.mjs"
+  },
+  "dependencies": {
+    "find-up": "6.3.0",
+    "json5": "2.2.1",
+    "lodash-es": "4.17.21",
+    "ora": "6.1.2",
+    "typescript": "^4.7.4",
+    "yargs": "17.5.1",
+    "zx": "^7.0.7"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "4.17.6",
+    "@types/yargs": "17.0.10"
+  },
+  "volta": {
+    "node": "16.16.0"
+  }
+}
