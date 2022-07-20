@@ -2,13 +2,22 @@ import _yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 
 export const useCLI = (
-  /**
-   * @type { import("yargs").CommandModule }
-   */
-  command
-) => ({ command, spawn: () => execute(command) });
+  /** @type { import("./types").CommandModule } */
+  cmd,
+) => ({
+  command: {
+    command: `${cmd.name} ${cmd.params?.join(' ')}`,
+    ...cmd,
+    filename: cmd.name,
+  },
+  spawn: () => execute(cmd),
+});
 
-export const execute = (cmd) =>
-  yargs.command({ ...cmd, command: '$0' }).help().argv;
+export const execute =
+  /** @type { import("./types").CommandModule } */
+  cmd =>
+    yargs
+      .command({ ...cmd, command: `$0 ${cmd.params?.join(' ') ?? ''}` })
+      .help().argv;
 
 export const yargs = _yargs(hideBin(process.argv));
