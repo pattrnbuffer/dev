@@ -1,14 +1,21 @@
 {
-  "name": "@dev/typestrict",
+  "name": "@pattrn/typestrict",
   "version": "1.0.0",
   "description": "Grow stricter code.",
   "main": "index.js",
   "author": "Evan Schneider <me@evanrs.com>",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "type": "module",
   "bin": {
     "typestrict": "./bin/typestrict.mjs",
     "typestrict-check": "./bin/check.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pattrnbuffer/dev.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pattrnbuffer/dev/issues"
   },
   "dependencies": {
     "find-up": "6.3.0",
