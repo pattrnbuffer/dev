@@ -1,6 +1,6 @@
 {
   "name": "@pattrn/typestrict",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Grow stricter code.",
   "main": "index.js",
   "author": "Evan Schneider <me@evanrs.com>",
