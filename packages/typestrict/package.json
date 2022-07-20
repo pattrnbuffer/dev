@@ -8,7 +8,8 @@
   "type": "module",
   "bin": {
     "typestrict": "./bin/typestrict.mjs",
-    "typestrict-check": "./bin/check.mjs"
+    "typestrict-check": "./bin/check.mjs",
+    "typestrict-configure": "./bin/configure.mjs"
   },
   "repository": {
     "type": "git",

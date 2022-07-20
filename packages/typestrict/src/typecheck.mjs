@@ -11,7 +11,7 @@ import { invariant } from './invariant.mjs';
 /**
  * locate nearest tsconfig and compile under --strict
  */
-export async function typecheck(sourcePath) {
+export async function typecheck(/** @type{string | undefined} */ sourcePath) {
   const configPath = invariant(
     await tsconfigPathFrom(sourcePath),
     `Could not find tsconfig.*.json near ${sourcePath}`,
