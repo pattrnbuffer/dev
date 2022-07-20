@@ -1,14 +1,14 @@
-#! /usr/bin/env node
 import { $, path } from 'zx';
 import { typecheck } from '../src/typecheck.mjs';
 import { useCLI } from '../src/tools.mjs';
 import { ora } from '../src/ora.mjs';
 
 export default useCLI({
-  command: 'check',
+  name: 'check',
+  params: ['[path]'],
   describe: 'Type check source path for errors',
   handler: check,
-  builder: (yargs) =>
+  builder: yargs =>
     yargs
       .positional('path', {
         type: 'string',
@@ -31,38 +31,39 @@ export default useCLI({
       }),
 });
 
-async function check(argv) {
-  $.verbose = Boolean(argv.verbose);
-  const [__source__] = argv._;
+async function check(props) {
+  $.verbose = Boolean(props.verbose);
 
-  const result = await ora(typecheck(path.resolve(process.cwd(), __source__)));
+  const result = await ora(typecheck(path.resolve(process.cwd(), props.path)));
 
   // report stats
-  if (argv.report) {
+  if (props.report) {
     report(result);
   }
   // print files
-  else if (argv.files) {
-    print(result.files, (v) => v.file);
+  else if (props.files) {
+    print(result.files, v => v.file);
   }
   // print lines
-  else if (argv.lines) {
-    print(result.lines, (v) => `${v.file}:${v.line}:${v.column}`);
+  else if (props.lines) {
+    print(result.lines, v => `${v.file}:${v.line}:${v.column}`);
   }
   // output everything as JSON
-  else print(result, null, { ...argv, json: true });
+  else print(result, null, { ...props, json: true });
 }
 
 function print(content, format, opts) {
-  format ??= (v) => v;
+  format ??= v => v;
   opts ??= argv;
 
   opts.list
     ? Array.isArray(content)
-      ? console.log(...content.map((v) => format(v) + '\n'))
+      ? console.log(...content.map(v => format(v) + '\n'))
       : console.log(format(content))
     : console.log(
-        opts.pretty ? JSON.stringify(content, null, 2) : JSON.stringify(content)
+        opts.pretty
+          ? JSON.stringify(content, null, 2)
+          : JSON.stringify(content),
       );
 }
 
@@ -75,7 +76,7 @@ function report(result) {
       result.lines.length,
       'errors across',
       result.files.length,
-      'files'
+      'files',
     );
   }
   // imagine a beach, a type safe beach

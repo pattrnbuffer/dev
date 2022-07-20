@@ -5,5 +5,5 @@ import check from '../cmds/check.mjs';
 yargs
   .scriptName('typestrict')
   .describe('Grow stricter code. 🪴')
-  .command(check)
+  .command(check.command)
   .help().argv;
