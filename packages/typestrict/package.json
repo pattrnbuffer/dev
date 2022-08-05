@@ -1,6 +1,6 @@
 {
   "name": "@pattrn/typestrict",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Grow stricter code.",
   "main": "index.js",
   "author": "Evan Schneider <me@evanrs.com>",
@@ -9,7 +9,8 @@
   "bin": {
     "typestrict": "./bin/typestrict.mjs",
     "typestrict-check": "./bin/check.mjs",
-    "typestrict-configure": "./bin/configure.mjs"
+    "typestrict-configure": "./bin/configure.mjs",
+    "typestrict-redistrict": "./bin/redistrict.mjs"
   },
   "repository": {
     "type": "git",

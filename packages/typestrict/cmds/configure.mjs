@@ -1,6 +1,6 @@
 import { $, fs, path } from 'zx';
 import { mapTSErrors, typecheck } from '../src/typecheck.mjs';
-import { useCLI } from '../src/tools.mjs';
+import { useCLI, readJSON } from '../src/tools.mjs';
 import { ora } from '../src/ora.mjs';
 import { mapFolderConfigs } from '../src/map-folder-configs.mjs';
 import { inspect } from 'util';
@@ -29,8 +29,18 @@ export default useCLI({
 
 async function configure(props) {
   $.verbose = Boolean(props.verbose);
-  const errors = await ora(typecheck(props.path));
-  const config = mapFolderConfigs(errors);
+  const errors = await ora(
+    readJSON(
+      '/Users/evan/projects/patternbuffer/dev/packages/typestrict/check.stdout',
+    ),
+  );
+  // const errors = await ora(typecheck(props.path));
+  const config = mapFolderConfigs(errors, {
+    strict: true,
+    alwaysStrict: true,
+    noImplicitAny: true,
+    allowJs: false,
+  });
 
   if (props['dry-run']) {
     console.log(inspect(config, false, 4, true));

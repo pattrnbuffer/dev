@@ -4,19 +4,26 @@ import path from 'path';
 export function mapFolderConfigs(
   /** @type {import('./types').TypeCheck.Value} */
   { configPath, projectPath, files },
+  compilerOptions,
 ) {
   return Object.entries(groupBy(files, ({ file }) => path.dirname(file))).map(
     ([folder, files]) => {
-      folder = path.resolve(projectPath, folder);
-
+      const filesPath = path.resolve(projectPath, folder);
+      const file = path.join(filesPath, 'tsconfig.json');
       return {
-        file: path.join(folder, 'tsconfig.json'),
+        file: file,
+        folder: filesPath,
+        filesPath,
         config: {
-          extends: path.relative(folder, configPath),
-          compilerOptions: {
-            strict: false,
-          },
-          files: files.map(({ file }) => path.parse(file).base),
+          '@@score': files.length,
+          compilerOptions,
+          extends: path.relative(filesPath, configPath),
+          include: ['*.ts', '*.tsx'],
+          exclude: files.map(({ file }) => {
+            const parsed = path.parse(file);
+
+            return path.relative(filesPath, path.resolve(projectPath, file));
+          }),
         },
       };
     },
