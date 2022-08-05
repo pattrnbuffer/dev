@@ -13,8 +13,9 @@ export default <NextApiHandler>function GithubAppEventsHandler(req, res) {
   const body = req.body;
 
   if (!signature || !event || !id || !body) {
-    console.error('required header or body missing');
-    return res.status(400).end();
+    return res
+      .status(400)
+      .send('Bad Request: Missing required headers or body');
   }
 
   const hmac = crypto.createHmac('sha256', app.webhookSecret);
@@ -22,8 +23,7 @@ export default <NextApiHandler>function GithubAppEventsHandler(req, res) {
   const digest = `sha256=${hmac.digest('hex')}`;
 
   if (digest !== signature) {
-    console.error('digest !== signature');
-    return res.status(400).end();
+    return res.status(400).send('Invalid signature');
   }
 
   return res.status(200).json(true);
