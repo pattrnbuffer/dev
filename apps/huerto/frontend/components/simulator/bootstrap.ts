@@ -1,34 +1,17 @@
+import { forEachDimension, reduceDimension } from './dimension';
 import {
   Address,
   Board,
   Color,
+  BlockMap,
   Dimensions,
   Point,
   World,
   WorldBlock,
 } from './types';
 
-export const world = bootstrap({ size: [3, 5] });
-console.log(world);
-
-function mapDimensions(
-  board: Board & { point?: Point },
-  onBlock: (point: number[]) => void,
-) {
-  if (board.size.length === 0) return;
-
-  const [D, ...size] = board.size;
-  const point = board.point ?? [];
-
-  for (let x = 0; x < D; x++) {
-    mapDimensions({ size, point: [...point, x] }, () => {
-      onBlock([...point, x]);
-    });
-  }
-}
-
-function bootstrap(board: Board): World {
-  const blockMap: Record<Address, WorldBlock> = {};
+export function createWorld(board: Board, createBlock = blockFor): World {
+  let blockMap: Record<Address, WorldBlock> = {};
 
   const [width, depth, height] = board.size;
 
@@ -38,33 +21,51 @@ function bootstrap(board: Board): World {
         for (let y = 0; y < depth; y++)
           if (height > 0)
             for (let z = 0; z < height; z++) {
-              const block: WorldBlock = blockFor([x, y, z]);
-              blockMap[block.address] = blockFor([x, y, z]);
+              const block: WorldBlock = createBlock(board.size, [x, y, z]);
+              blockMap[block.address] = createBlock(board.size, [x, y, z]);
             }
           else {
-            const block: WorldBlock = blockFor([x, y]);
-            blockMap[block.address] = blockFor([x, y]);
+            const block: WorldBlock = createBlock(board.size, [x, y]);
+            blockMap[block.address] = createBlock(board.size, [x, y]);
           }
       else {
-        const block: WorldBlock = blockFor([x]);
-        blockMap[block.address] = blockFor([x]);
+        const block: WorldBlock = createBlock(board.size, [x]);
+        blockMap[block.address] = createBlock(board.size, [x]);
       }
 
   return {
+    id: 0,
     board: board,
     blocks: blockMap,
   };
 }
 
-function blockFor(point: Point, color?: Color): WorldBlock {
+function blockFor(size: Dimensions, point: Point, color?: Color): WorldBlock {
   return {
     point,
     address: point.join(','),
-    color: blockColorFor(point),
+    color: color ?? blockColorFor(size, point),
   };
 }
 
-function blockColorFor([x = 0, y = 0, z = 0]: number[]): Color {
-  const [r, g, b] = [x, y, z].map(x => ((x + 1) * 127) % 255);
-  return `rgba(${r}, ${g}, ${b}, 1)`;
+const ChannelBias = [0.1, 0.65, 0.76];
+const AxisBias = [0.5, 0.9, 0.5];
+
+function blockColorFor(dimensions: number[], point: number[]): Color {
+  const [r, g, b] = [...point, 0].slice(0, 3).map((value, i) => {
+    const dim = vomean(dimensions, i);
+    const abias = vomean(AxisBias, i);
+    const cbias = vomean(ChannelBias, i);
+    const scale = ((value || 1) / dim + 0.5) % 1;
+
+    // value = 127 * scale + 127 * abias + 127 * cbias;
+    value = 127 * scale + 127 * abias + 127 * cbias;
+    return value;
+  });
+
+  return [r, g, b, 1];
+}
+
+function vomean(source: number[], index: number): number {
+  return source[index] ?? source.reduce((a, b) => a + b, 0) / source.length;
 }

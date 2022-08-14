@@ -2,10 +2,17 @@ import { Box } from '@chakra-ui/react';
 
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useEffect, useState } from 'react';
 import { Simulator } from '~/frontend/components/simulator/simulator';
 
 const SimulatorPage: NextPage = () => {
-  return (
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
+
+  return !mounted ? null : (
     <>
       <Head>
         <title>👻</title>
@@ -18,7 +25,7 @@ const SimulatorPage: NextPage = () => {
         justifyContent="center"
         flexFlow="row wrap"
       >
-        <Simulator />
+        <Simulator board={{ size: [9, 9] }} interval={300} />
       </Box>
     </>
   );

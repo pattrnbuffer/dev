@@ -2,6 +2,7 @@ export type Board = {
   size: number[];
 };
 export type World = {
+  id: number;
   board: Board;
   blocks: Record<string, WorldBlock>;
 };
@@ -11,7 +12,10 @@ export type WorldBlock = {
   color: Color;
 };
 
-export type Color = string;
-export type Dimensions = number[]; // [number] | [number, number] | [number, number, number];
-export type Point = Dimensions;
+export type Locator = Address | { address: Address };
+
+export type BlockMap = Record<Address, WorldBlock>;
+export type Color = number[];
+export type Dimensions = Point; // [number] | [number, number] | [number, number, number];
+export type Point = number[];
 export type Address = string; // of dimensions [width, depth, height]
