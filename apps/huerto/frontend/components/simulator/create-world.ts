@@ -36,7 +36,7 @@ export function createWorld(board: Board, createBlock = blockFor): World {
   return {
     id: 0,
     board: board,
-    blocks: blockMap,
+    blockMap: blockMap,
   };
 }
 

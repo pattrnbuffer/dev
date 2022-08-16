@@ -4,7 +4,7 @@ export type Board = {
 export type World = {
   id: number;
   board: Board;
-  blocks: Record<string, WorldBlock>;
+  blockMap: Record<string, WorldBlock>;
 };
 export type WorldBlock = {
   address: Address;

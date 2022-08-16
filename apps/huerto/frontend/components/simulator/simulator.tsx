@@ -1,52 +1,63 @@
 import { Box } from '@chakra-ui/react';
-import { FC } from 'react';
+import { useAtom } from 'jotai';
+import { FC, useEffect, useState } from 'react';
 import { useMousePosition } from '~/frontend/hooks';
-import { rgba } from './color';
+import { colors, rgba } from './color';
+import { createWorld } from './create-world';
+import {
+  useAllBlockAtoms,
+  setBlockAtom,
+  useBlockAtom,
+  BlockAtom,
+} from './jotai';
+import { forEachPosition } from './jotai/create-blocks';
 import { Locator } from './types';
 import { useNeighbors } from './useNeighbors';
 import { vectorFor } from './vector';
-import {
-  useBlockState,
-  useWorld,
-  useWorldSize,
-  useWorldTick,
-  WorldProvider,
-  WorldProviderProps,
-} from './world';
+import { useBlockState, useWorldSize, WorldProviderProps } from './world';
 
-export const Simulator: FC<WorldProviderProps> = props => {
-  return (
-    <WorldProvider {...props} board={{ size: [12, 12] }}>
-      <World />
-    </WorldProvider>
-  );
+export const Simulator: FC<WorldProviderProps> = ({ board, interval }) => {
+  const [stage, setStage] = useState<'mounted' | 'created'>('mounted');
+  const [, setBlock] = useAtom(setBlockAtom);
+
+  useEffect(() => {
+    if (stage === 'mounted') {
+      setStage('created');
+      forEachPosition(board.size, position => {
+        setBlock({
+          position,
+          props: {
+            color: {
+              affinity: Math.random(),
+              integrity: Math.random(),
+              // @ts-expect-error
+              value:
+                colors[position.reduce((a, b) => a + b, 0) % colors.length],
+            },
+          },
+        });
+      });
+    }
+  }, []);
+
+  return <BlockMap />;
 };
 
-export const World: FC = () => {
-  const world = useWorld();
+export const BlockMap: FC = () => {
   const { wx, wy } = useMousePosition();
+  const blockMap = useAllBlockAtoms();
 
   return (
     <>
-      {Object.keys(world.blocks).map(address => (
-        <Block
-          key={address}
-          // fx={wx}
-          // fy={wy}
-          fx={0.5}
-          fy={0.5}
-          locator={address}
-        />
+      {Object.entries(blockMap).map(([key, atom]) => (
+        <Block key={key} atom={block}></Block>
       ))}
     </>
   );
 };
 
-const Block: FC<{ fx: number; fy: number; locator: Locator }> = ({
-  fx,
-  fy,
-  locator,
-}) => {
+const Block: FC<{ atom: BlockAtom }> = ({ atom }) => {
+  useBlockAtom(locator);
   const [width, height, ...rest] = useWorldSize();
   const [block, setState] = useBlockState(locator);
   const { locals } = useNeighbors(block);

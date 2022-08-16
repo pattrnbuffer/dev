@@ -1,5 +1,5 @@
 import { World, Board, WorldBlock, Locator } from './types';
-import { createWorld } from './bootstrap';
+import { createWorld } from './create-world';
 import {
   createContext,
   Dispatch,
@@ -108,6 +108,6 @@ export const useBlockState = (locator: Locator, update?: WorldBlock) => {
 
 export const findBlockFor = (world: World, locator: Locator) => {
   return typeof locator === 'string'
-    ? world.blocks[locator]
-    : world.blocks[locator.address];
+    ? world.blockMap[locator]
+    : world.blockMap[locator.address];
 };

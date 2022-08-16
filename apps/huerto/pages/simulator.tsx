@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
-import { Simulator } from '~/frontend/components/simulator/simulator';
+import { Simulator } from '~/frontend/components/simulator';
 
 const SimulatorPage: NextPage = () => {
   const [mounted, setMounted] = useState(false);
