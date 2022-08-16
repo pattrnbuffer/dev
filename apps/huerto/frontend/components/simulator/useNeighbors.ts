@@ -55,10 +55,16 @@ export function mapDeltas<K extends Locals>(
   >;
 }
 
+type SideX = Record<Side, number[]>;
+type EdgeX = Record<Edge, number[]>;
+type CornerX = Record<Corner, number[]>;
+type LocalsX = Record<Locals, number[]>;
+
 type Side = keyof typeof sidex;
-type Edge = keyof typeof sidex;
-type Corner = keyof typeof sidex;
+type Edge = keyof typeof edgex;
+type Corner = keyof typeof cornerx;
 type Locals = Side | Edge | Corner;
+
 const sidex = {
   r: [1, 0],
   l: [-1, 0],
@@ -66,7 +72,7 @@ const sidex = {
   d: [0, -1],
   f: [0, 0, 1],
   b: [0, 0, -1],
-} as const;
+};
 
 const edgex = {
   ul: [-1, 1, 0],
@@ -77,7 +83,7 @@ const edgex = {
   bl: [-1, 0, -1],
   fr: [1, 0, 1],
   br: [1, 0, -1],
-} as const;
+};
 
 const cornerx = {
   ful: [-1, 1, 1],
@@ -88,4 +94,4 @@ const cornerx = {
   fdr: [1, -1, 1],
   bdl: [-1, -1, -1],
   bdr: [1, -1, -1],
-} as const;
+};

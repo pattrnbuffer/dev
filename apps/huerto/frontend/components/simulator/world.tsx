@@ -69,7 +69,7 @@ export const WorldProvider: FC<WorldProviderProps> = ({
 
           setBlockUpdates(blocks => [...blocks, block]);
         },
-      ] as const,
+      ] as WorldContextValue,
     [world],
   );
   return (

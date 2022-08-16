@@ -13,7 +13,7 @@ import {
   useMemo,
 } from 'react';
 
-type BlockContextValue = { block?: Block };
+type BlockContextValue = { block?: WorldBlock };
 const BlockContext = createContext<BlockContextValue>(
   undefined as unknown as BlockContextValue,
 );

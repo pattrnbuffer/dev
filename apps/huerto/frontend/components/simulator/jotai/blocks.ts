@@ -1,6 +1,4 @@
-import { merge } from 'lodash';
-import { Atom, atom, PrimitiveAtom, useAtom } from 'jotai';
-import { atomWithImmer } from 'jotai/immer';
+import { atom, useAtom, WritableAtom } from 'jotai';
 import { useMemo } from 'react';
 import { BlockProps } from './props';
 
@@ -11,15 +9,21 @@ export type Block = {
   props: BlockProps;
 };
 
-export type BlockAtom = Atom<Block>;
+// export type BlockAtom<
+//   Value extends Block = Block,
+//   Update extends BlockUpdate = BlockUpdate,
+// > = WritableAtom<Value, SetStateAction<Update>>;
+export type BlockAtom = WritableAtom<Block, Block>;
 
-export type BlockAtomInput = Partial<Block> & Pick<Block, 'position'>;
+export type BlockUpdate = Partial<Block> & Pick<Block, 'position'>;
 
-const blocksAtom = atomWithImmer<Record<string, PrimitiveAtom<Block>>>({
+const blocksAtom = atom<Record<string, BlockAtom>>({
   // [1,1,1]: { … position: [1, 1, 1] }
 });
 
-export const setBlockAtom = atom(null, (get, set, update: BlockAtomInput) => {
+const empty: Block = { type: 'block', key: '', position: [], props: {} };
+
+export const setBlockAtom = atom(null, (get, set, update: BlockUpdate) => {
   const key = update.key ?? String(update.position);
   const blocks = get(blocksAtom);
   const source = blocks[key];
@@ -27,10 +31,13 @@ export const setBlockAtom = atom(null, (get, set, update: BlockAtomInput) => {
   if (source && update) {
     set(source, { ...get(source), ...update });
   } else {
-    set(blocksAtom, {
-      ...blocks,
-      [key]: atom({ ...empty, ...update, key }),
+    const blockAtom: BlockAtom = atom<Block>({
+      ...empty,
+      ...update,
+      key,
     });
+
+    set(blocksAtom, { ...blocks, [key]: blockAtom });
   }
 });
 
@@ -45,5 +52,3 @@ export function useBlockAtom(key: string) {
     }, [key]),
   );
 }
-
-const empty: Block = { type: 'block', key: '', position: [], props: {} };
