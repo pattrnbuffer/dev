@@ -1,4 +1,4 @@
-import { atom, useAtom, WritableAtom } from 'jotai';
+import { atom, useAtom, useSetAtom, WritableAtom } from 'jotai';
 import { useMemo } from 'react';
 import { BlockProps } from './props';
 
@@ -20,6 +20,15 @@ export type BlockUpdate = Partial<Block> & Pick<Block, 'position'>;
 const blocksAtom = atom<Record<string, BlockAtom>>({
   // [1,1,1]: { … position: [1, 1, 1] }
 });
+export const useAllBlockReset = () => {
+  return useSetAtom(
+    useMemo(() => atom(null, (_, set) => set(blocksAtom, {})), []),
+  );
+};
+
+export const useAllBlockAtoms = () => {
+  return useAtom(blocksAtom);
+};
 
 const empty: Block = { type: 'block', key: '', position: [], props: {} };
 
@@ -40,10 +49,6 @@ export const setBlockAtom = atom(null, (get, set, update: BlockUpdate) => {
     set(blocksAtom, { ...blocks, [key]: blockAtom });
   }
 });
-
-export const useAllBlockAtoms = () => {
-  return useAtom(blocksAtom);
-};
 
 export function useBlockAtom(key: string) {
   return useAtom(

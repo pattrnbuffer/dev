@@ -7,6 +7,13 @@ type Dimensions = number[];
 export const stageAtom = atom<Stage>('mounted');
 export const boardAtom = atom<Board>({ size: [0] });
 
+export const appAtom = atom(get => {
+  return {
+    stage: get(stageAtom),
+    board: get(boardAtom),
+  };
+});
+
 const boardValue = atom(get => get(boardAtom));
 export const useBoardValue = () => {
   const [board] = useAtom(boardValue);

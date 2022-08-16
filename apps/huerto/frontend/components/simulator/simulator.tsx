@@ -1,31 +1,31 @@
-import { Box, styled } from '@chakra-ui/react';
-import { atom, useAtom, useSetAtom } from 'jotai';
-import { FC, useEffect, useState } from 'react';
-import { useMousePosition } from '~/frontend/hooks';
-import { tileColors, rgba, generateColor } from './color';
-import { createWorld } from './create-world';
+import { Box } from '@chakra-ui/react';
+import { useAtom, useSetAtom } from 'jotai';
+import { FC, useEffect } from 'react';
+import { generateColor, rgba, tileColors } from './color';
 import { BoxTile } from './elements';
 import {
-  useAllBlockAtoms,
-  setBlockAtom,
-  useBlockAtom,
   BlockAtom,
+  setBlockAtom,
+  useAllBlockAtoms,
+  useAllBlockReset,
 } from './jotai';
-import { useBoardValue, boardAtom, stageAtom } from './jotai/board';
+import { boardAtom, stageAtom, useBoardValue } from './jotai/board';
 import { forEachPosition } from './jotai/create-blocks';
 import { mouseAtom } from './jotai/mouse';
-import { Board, Locator } from './types';
-import { useNeighbors } from './useNeighbors';
-import { vectorFor } from './vector';
-import { useBlockState, useWorldSize, WorldProviderProps } from './world';
+import { round } from './tools';
+import { distanceFor, vectorFor } from './vector';
+import { WorldProviderProps } from './world';
 
 export const Simulator: FC<WorldProviderProps> = ({ board, interval }) => {
   const [stage, setStage] = useAtom(stageAtom);
   const setBoard = useSetAtom(boardAtom);
   const setBlock = useSetAtom(setBlockAtom);
+  const resetBlocks = useAllBlockReset();
 
   useEffect(() => {
+    setStage('mounted');
     setBoard(board);
+    resetBlocks();
   }, [String(board.size)]);
 
   useEffect(() => {
@@ -36,11 +36,12 @@ export const Simulator: FC<WorldProviderProps> = ({ board, interval }) => {
           const magic = Math.round((Math.sin(b) % Math.cos(a)) + Math.tan(a));
           return a + b + magic;
         });
+
         setBlock({
           position,
           props: {
             color: {
-              affinity: Math.random(),
+              energy: Math.random(),
               integrity: Math.random(),
               value: color,
             },
@@ -65,62 +66,58 @@ export const BlockMap: FC = () => {
   return (
     <>
       {Object.entries(blockMap).map(([key, atom]) => (
-        <Block key={key} atom={atom} focus={mouse.position}></Block>
+        <Block
+          key={key}
+          atom={atom}
+          // would be used by an agent walking the room
+          focus={mouse.position}
+        ></Block>
       ))}
     </>
   );
 };
 
-const Block: FC<{ atom: BlockAtom; focus: number[] }> = ({
-  atom,
-  focus: [fx, fy],
-}) => {
+const Block: FC<{ atom: BlockAtom; focus: number[] }> = ({ atom, focus }) => {
   // or with a blockKey prop useBlockAtom(blockKey);
-  const { size: [width, height, ...rest] = [] } = useBoardValue();
-  const [block] = useAtom(atom);
   const {
-    position: [x, y],
-  } = block;
-  [fy, fx] = [fx, fy];
-  const affinities = vectorFor(
-    [width, height, ...rest],
-    block.position,
-    // why did this need to be revered?
-    [fx, fy],
-  );
-  const [ax, ay] = affinities;
+    size = [],
+    size: [width, height],
+  } = useBoardValue();
+  const [{ position, props }] = useAtom(atom);
 
-  // console.log('fy, fx', fy, fx);
-  // console.log('ay, ax', ay, ax);
-  // console.log('1 / width', 1 / width);
-  // console.log('1 / height', 1 / height);
-  // const tx = Math.cos(Math.abs((x + fx) / (width + 1)));
-  // const ty = Math.cos(Math.abs((y + fy) / (height + 1)));
-  // const txy = Math.cos(Math.abs((x + y + fx + fy) / (width + height + 2)));
-  // if (x === 0 && y === 0) {
-  //   console.log('txy', txy);
-  // }
-  // console.log('tx, ty', tx, ty);
-
-  const alpha = 1 - (Math.abs(ax / width) + Math.abs(ay / height));
-  // const alpha = txy;
+  const distance = round(distanceFor(size, position, focus), 4);
 
   return (
     <BoxTile
       style={{
         minWidth: `calc(100vw / ${width})`,
         minHeight: `calc(100vh / ${height})`,
-        backgroundColor: rgba(block.props.color?.value ?? []),
-        opacity: alpha,
+        backgroundColor: rgba(props.color?.value ?? []),
+        opacity: Math.max(0.1, (1 - distance) ** 4),
       }}
     >
       <BoxTile gap="1rem">
-        {affinities.map((v, i) => (
-          <Box key={i} fontSize=".5rem">
-            {Math.round(100 * v) / 100}
-          </Box>
-        ))}
+        <Box fontSize="0.5rem" fontWeight="900">
+          {distance}
+        </Box>
       </BoxTile>
     </BoxTile>
   );
 };
+
+// function unused__affinity_relevance() {
+// TODO: why do I have to flip the dimensions? [fy, fx]
+// const affinities = vectorFor(size, position, focus);
+// const relevance = Math.sqrt(affinities.reduce((sum, b) => sum + b ** 2, 0));
+// const relevance =
+//   1 -
+//   affinities.reduce(
+//     (alpha, affinity, i) => alpha + Math.abs(affinity ** 2 / size[i]),
+//     0,
+//   );
+/* {affinities.map((v, i) => (
+          <Box key={i} fontSize=".5rem">
+            {round(v)}
+          </Box>
+        ))} */
+// }

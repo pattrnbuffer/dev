@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import { Simulator } from '~/frontend/components/simulator';
 
-const SimulatorPage: NextPage = () => {
+const TilesPage: NextPage = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -24,11 +24,12 @@ const SimulatorPage: NextPage = () => {
         alignItems="center"
         justifyContent="center"
         flexFlow="row wrap"
+        backgroundColor="#FFF"
       >
-        <Simulator board={{ size: [9, 9] }} interval={300} />
+        <Simulator board={{ size: [10, 10] }} interval={300} />
       </Box>
     </>
   );
 };
 
-export default SimulatorPage;
+export default TilesPage;

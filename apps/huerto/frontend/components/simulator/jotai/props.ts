@@ -9,6 +9,6 @@ export type SelectProp = {
 
 export type ColorProp = {
   value: number[];
-  affinity: number;
+  energy: number;
   integrity: number;
 };
