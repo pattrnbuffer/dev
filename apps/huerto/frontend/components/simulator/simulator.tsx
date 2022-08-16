@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { useAtom } from 'jotai';
+import { atom, useAtom, useSetAtom } from 'jotai';
 import { FC, useEffect, useState } from 'react';
 import { useMousePosition } from '~/frontend/hooks';
 import { colors, rgba } from './color';
@@ -10,15 +10,21 @@ import {
   useBlockAtom,
   BlockAtom,
 } from './jotai';
+import { useBoardValue, boardAtom, stageAtom } from './jotai/board';
 import { forEachPosition } from './jotai/create-blocks';
-import { Locator } from './types';
+import { Board, Locator } from './types';
 import { useNeighbors } from './useNeighbors';
 import { vectorFor } from './vector';
 import { useBlockState, useWorldSize, WorldProviderProps } from './world';
 
 export const Simulator: FC<WorldProviderProps> = ({ board, interval }) => {
-  const [stage, setStage] = useState<'mounted' | 'created'>('mounted');
-  const [, setBlock] = useAtom(setBlockAtom);
+  const [stage, setStage] = useAtom(stageAtom);
+  const setBoard = useSetAtom(boardAtom);
+  const setBlock = useSetAtom(setBlockAtom);
+
+  useEffect(() => {
+    setBoard(board);
+  }, []);
 
   useEffect(() => {
     if (stage === 'mounted') {
@@ -40,33 +46,37 @@ export const Simulator: FC<WorldProviderProps> = ({ board, interval }) => {
     }
   }, []);
 
-  return <BlockMap />;
+  return (
+    <>
+      <BlockMap />
+    </>
+  );
 };
 
 export const BlockMap: FC = () => {
   const { wx, wy } = useMousePosition();
-  const blockMap = useAllBlockAtoms();
+  const [blockMap, updateBlockMap] = useAllBlockAtoms();
 
   return (
     <>
       {Object.entries(blockMap).map(([key, atom]) => (
-        <Block key={key} atom={block}></Block>
+        <Block key={key} atom={atom}></Block>
       ))}
     </>
   );
 };
 
 const Block: FC<{ atom: BlockAtom }> = ({ atom }) => {
-  useBlockAtom(locator);
-  const [width, height, ...rest] = useWorldSize();
-  const [block, setState] = useBlockState(locator);
-  const { locals } = useNeighbors(block);
+  // or with a blockKey prop useBlockAtom(blockKey);
+  const { size: [width, height, ...rest] = [] } = useBoardValue();
+  const [block] = useAtom(atom);
 
   const affinities = vectorFor(
     [width, height, ...rest],
-    block.point,
+    block.position,
     // why did this need to be revered?
-    [fy, fx],
+    // [fy, fx],
+    [0.5, 0.5],
   );
   const [ax, ay] = affinities;
 
@@ -85,7 +95,7 @@ const Block: FC<{ atom: BlockAtom }> = ({ atom }) => {
       minWidth={`${100 / width}vw`}
       minHeight={`${100 / height}vh`}
       flex={`1 1 0`}
-      backgroundColor={rgba(block.color)}
+      backgroundColor={rgba(block.props.color?.value ?? [])}
       style={{ opacity: alpha }}
       transition="opacity 0.3s ease"
     >
