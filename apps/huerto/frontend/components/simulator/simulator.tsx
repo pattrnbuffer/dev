@@ -25,7 +25,7 @@ export const Simulator: FC<WorldProviderProps> = ({ board, interval }) => {
 
   useEffect(() => {
     setStage('mounted');
-    setBoard(board);
+    setBoard({ id: board.size.join(','), ...board });
     resetBlocks();
   }, [String(board.size)]);
 

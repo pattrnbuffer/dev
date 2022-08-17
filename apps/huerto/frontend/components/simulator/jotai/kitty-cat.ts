@@ -46,13 +46,15 @@ export function useKittyCat() {
   );
 
   useEffect(() => {
+    setCat(Math.random());
+
     // TODO world tick
     const id = setInterval(() => {
       setCat(Math.random());
     }, 200);
 
     return () => clearInterval(id);
-  });
+  }, [String(size)]);
 
   return cat;
 }

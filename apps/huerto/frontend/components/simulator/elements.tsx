@@ -8,7 +8,7 @@ export const BoxTile = styled(Box)`
   flex: 1 1 0;
   justify-content: center;
   align-items: center;
-  transition: opacity 380ms ease-out;
+  transition: opacity 180ms ease-out;
   color: rgba(255, 255, 255, 0.75);
 `;
 
