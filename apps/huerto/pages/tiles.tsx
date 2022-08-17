@@ -26,7 +26,7 @@ const TilesPage: NextPage = () => {
         flexFlow="row wrap"
         backgroundColor="#FFF"
       >
-        <Simulator board={{ size: [10, 10] }} interval={300} />
+        <Simulator board={{ size: [8, 8] }} interval={300} />
       </Box>
     </>
   );

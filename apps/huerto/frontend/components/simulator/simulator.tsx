@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react';
-import { useAtom, useSetAtom } from 'jotai';
+import { atom, useAtom, useSetAtom } from 'jotai';
 import { FC, useEffect } from 'react';
 import { generateColor, rgba, tileColors } from './color';
-import { BoxTile } from './elements';
+import { BoxTile, KittyCat } from './elements';
 import {
   BlockAtom,
   setBlockAtom,
@@ -11,9 +11,10 @@ import {
 } from './jotai';
 import { boardAtom, stageAtom, useBoardValue } from './jotai/board';
 import { forEachPosition } from './jotai/create-blocks';
+import { useKittyCat } from './jotai/kitty-cat';
 import { mouseAtom } from './jotai/mouse';
 import { round } from './tools';
-import { distanceFor, vectorFor } from './vector';
+import { distanceFor } from './vector';
 import { WorldProviderProps } from './world';
 
 export const Simulator: FC<WorldProviderProps> = ({ board, interval }) => {
@@ -60,9 +61,9 @@ export const Simulator: FC<WorldProviderProps> = ({ board, interval }) => {
 };
 
 export const BlockMap: FC = () => {
-  const [mouse] = useAtom(mouseAtom);
+  // const [mouse] = useAtom(mouseAtom);
   const [blockMap] = useAllBlockAtoms();
-
+  const cat = useKittyCat();
   return (
     <>
       {Object.entries(blockMap).map(([key, atom]) => (
@@ -70,14 +71,21 @@ export const BlockMap: FC = () => {
           key={key}
           atom={atom}
           // would be used by an agent walking the room
-          focus={mouse.position}
-        ></Block>
+          // focus={mouse.position}
+          focus={cat.focus}
+        >
+          {key === cat.key && <KittyCat delta={cat.delta} />}
+        </Block>
       ))}
     </>
   );
 };
 
-const Block: FC<{ atom: BlockAtom; focus: number[] }> = ({ atom, focus }) => {
+const Block: FC<{ atom: BlockAtom; focus: number[] }> = ({
+  atom,
+  focus,
+  children,
+}) => {
   // or with a blockKey prop useBlockAtom(blockKey);
   const {
     size = [],
@@ -101,6 +109,7 @@ const Block: FC<{ atom: BlockAtom; focus: number[] }> = ({ atom, focus }) => {
           {distance}
         </Box>
       </BoxTile>
+      {children}
     </BoxTile>
   );
 };
