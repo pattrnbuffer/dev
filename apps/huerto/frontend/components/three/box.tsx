@@ -1,11 +1,13 @@
+import { ThreeElements, useFrame } from '@react-three/fiber';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { type Mesh } from 'three';
-import { type EventHandlers } from '@react-three/fiber/dist/declarations/src/core/events.js';
-import { useFrame, ThreeElements, ThreeEvent } from '@react-three/fiber';
+import { useHovered, useWheel } from './handlers';
+import { useCommits } from './use-commits';
 import { useObserved } from './use-observed';
-import { useRef, useState, FC, useEffect } from 'react';
+import { useTrunk } from './use-trunk';
 
 export type BoxProps = ThreeElements['mesh'];
-let shouldLog = true;
+
 export const Box: FC<BoxProps> = props => {
   // This reference will give us direct access to the mesh
   const mesh = useRef<Mesh>(null!);
@@ -14,25 +16,31 @@ export const Box: FC<BoxProps> = props => {
     state: { hovered, wheel },
     handlers,
   } = useObserved([useWheel, useHovered] as const);
-  const input = useRef({ acceleration: 0 });
+
+  const io = useRef({
+    delta: { x: 0, y: 0, z: 0, t: 0 },
+  });
+
   useEffect(() => {
-    const mod = input.current;
-    mod.acceleration += wheel;
-    mod.acceleration +=
-      wheel * (Math.sign(mod.acceleration) === Math.sign(wheel) ? 1 : 4);
+    const { delta } = io.current;
+    const same = Math.sign(delta.y) === Math.sign(wheel);
+    delta.y += wheel;
+    delta.y += wheel * (same ? 1 : 4);
   }, [wheel.toPrecision(1)]);
 
   const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
-    const mod = input.current;
-    if (mod.acceleration) {
-      mod.acceleration =
-        Math.sign(mod.acceleration) *
-        Math.max(0, Math.abs(mod.acceleration) - 0.005);
-    } else mod.acceleration = 0;
+    const ioc = io.current;
 
-    return (mesh.current.rotation.x += mod.acceleration / 100);
+    if (ioc.delta.y) {
+      ioc.delta.y =
+        Math.sign(ioc.delta.y) * Math.max(0, Math.abs(ioc.delta.y) - 0.005);
+    } else {
+      ioc.delta.y = 0;
+    }
+
+    return (mesh.current.rotation.x += ioc.delta.y / 100);
   });
 
   // Return view, these are regular three.js elements expressed in JSX
@@ -49,33 +57,3 @@ export const Box: FC<BoxProps> = props => {
     </mesh>
   );
 };
-
-type AnyFunc = (...args: any[]) => any;
-
-function useWheel() {
-  const [state, setState] = useState(0);
-
-  return {
-    key: 'wheel',
-    state,
-    handlers: {
-      onWheel: (event: ThreeEvent<WheelEvent>) => {
-        const value = event.nativeEvent.deltaY / event.nativeEvent.clientX;
-        setState(-Number(value.toPrecision(2)));
-      },
-    },
-  } as const;
-}
-
-function useHovered(observed?: Record<string, boolean>) {
-  const [hovered, setHover] = useState(false);
-
-  return {
-    key: 'hovered',
-    state: hovered,
-    handlers: {
-      onPointerOver: () => setHover(true),
-      onPointerOut: () => setHover(false),
-    },
-  } as const;
-}
