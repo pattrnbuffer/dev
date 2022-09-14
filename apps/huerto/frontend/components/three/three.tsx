@@ -10,11 +10,12 @@ import { useGlobal } from './use-global';
 export const Renderer: FC = () => {
   const global = useGlobal();
   const unit = 1;
-  const length = 3;
+  const length = 4;
+  const offset = ((length - 1) / 2) * unit;
+
   const list = Array.from({ length }).flatMap((_, x) =>
     Array.from({ length }).map((_, y) => {
-      const offset = length / 2;
-      return [x - offset, y - offset];
+      return [x, y];
     }),
   );
 
@@ -25,7 +26,11 @@ export const Renderer: FC = () => {
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
       {list.map(([x, y], i) => (
-        <Box key={[x, y, i].join()} position={[x, y, 0]} />
+        <Box
+          key={[x, y, i].join()}
+          position={[x, y, 0]}
+          translate={[-offset, -offset, 0]}
+        />
       ))}
     </Canvas>
   );

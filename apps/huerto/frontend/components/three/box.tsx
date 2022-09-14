@@ -1,20 +1,38 @@
+import type * as Three from 'three';
 import { ThreeElements } from '@react-three/fiber';
-import { FC, useEffect } from 'react';
-import { Mesh, useMesh, useMeshObserver } from './mesh';
+import { FC, useEffect, useRef } from 'react';
+import { Mesh, MeshRef, useMesh, useMeshObserver } from './mesh';
 import { useRotation } from './reactions';
+export type BoxProps = ThreeElements['mesh'] & {
+  translate: [number, number, number];
+};
 
-export type BoxProps = ThreeElements['mesh'];
-
-export const Box: FC<BoxProps> = props => {
-  // Return view, these are regular three.js elements expressed in JSX
+export const Box: FC<BoxProps> = ({ translate, ...props }) => {
   return (
     <Mesh {...props}>
       <boxGeometry args={[1, 1, 1]} />
+      <Position translate={translate} />
       <Scale />
       <Rotation />
       <ReactiveMaterial />
     </Mesh>
   );
+};
+
+type PositionProps = { translate: number[] };
+
+const Position: FC<PositionProps> = ({ translate, ...props }) => {
+  const mesh = useMesh();
+  const [x, y, z] = Array.from({ ...[0, 0, 0], ...translate, length: 3 });
+
+  useEffect(() => {
+    mesh.current?.translateX(x).translateY(y).translateZ(z);
+    return () => {
+      mesh.current?.translateX(-x).translateY(-y).translateZ(-z);
+    };
+  }, [mesh, x, y, z]);
+
+  return null;
 };
 
 const Scale = () => {
