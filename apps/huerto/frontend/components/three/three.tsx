@@ -9,6 +9,14 @@ import { useGlobal } from './use-global';
 
 export const Renderer: FC = () => {
   const global = useGlobal();
+  const unit = 1;
+  const length = 3;
+  const list = Array.from({ length }).flatMap((_, x) =>
+    Array.from({ length }).map((_, y) => {
+      const offset = length / 2;
+      return [x - offset, y - offset];
+    }),
+  );
 
   return (
     <Canvas>
@@ -16,8 +24,9 @@ export const Renderer: FC = () => {
       <directionalLight color="red" position={[0, 0, global.depth]} />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Box position={[-1.2, 0, 0]} />
-      <Box position={[1.2, 0, 0]} />
+      {list.map(([x, y], i) => (
+        <Box key={[x, y, i].join()} position={[x, y, 0]} />
+      ))}
     </Canvas>
   );
 };

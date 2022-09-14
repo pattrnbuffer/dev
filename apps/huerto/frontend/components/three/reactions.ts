@@ -1,10 +1,12 @@
 import { useFrame } from '@react-three/fiber';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMesh, useMeshObserver } from './mesh';
 
 export function useRotation() {
   const mesh = useMesh();
-  const { wheel } = useMeshObserver();
+  const {
+    state: { wheel },
+  } = useMeshObserver();
 
   const io = useRef({
     delta: { x: 0, y: 0, z: 0, t: 0 },
@@ -19,6 +21,8 @@ export function useRotation() {
 
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
+    if (!mesh) return;
+
     const ioc = io.current;
 
     if (ioc.delta.y) {

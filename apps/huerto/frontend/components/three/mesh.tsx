@@ -34,7 +34,7 @@ export const Mesh = forwardRef<Three.Mesh, MeshProps>((props, ref) => {
   const observer = useMemo(() => ({ state, history }), [state, history]);
 
   return (
-    <MeshContext.Provider value={mesh.current ? mesh : undefined}>
+    <MeshContext.Provider value={mesh}>
       <MeshObserverContext.Provider value={observer}>
         <mesh
           ref={instance => {
