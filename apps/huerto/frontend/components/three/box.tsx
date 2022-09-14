@@ -1,16 +1,17 @@
 import { ThreeElements, useFrame } from '@react-three/fiber';
 import { FC, useEffect, useMemo, useRef, useState } from 'react';
-import { type Mesh } from 'three';
 import { useHovered, useWheel } from './handlers';
 import { useCommits } from './use-commits';
 import { useObserved } from './use-observed';
 import { useTrunk } from './use-trunk';
+import { Mesh } from './mesh';
+import type * as Three from 'three';
 
 export type BoxProps = ThreeElements['mesh'];
 
 export const Box: FC<BoxProps> = props => {
   // This reference will give us direct access to the mesh
-  const mesh = useRef<Mesh>(null!);
+  const mesh = useRef<Three.Mesh>(null!);
   // Set up state for the hovered and active state
   const {
     state: { hovered, wheel },
@@ -45,7 +46,7 @@ export const Box: FC<BoxProps> = props => {
 
   // Return view, these are regular three.js elements expressed in JSX
   return (
-    <mesh
+    <Mesh
       {...props}
       ref={mesh}
       scale={active ? 1.5 : 1}
@@ -54,6 +55,6 @@ export const Box: FC<BoxProps> = props => {
     >
       <boxGeometry args={[1, 1, 1]} />
       <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-    </mesh>
+    </Mesh>
   );
 };

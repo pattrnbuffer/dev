@@ -9,6 +9,7 @@ import {
   useRef,
 } from 'react';
 import type * as Three from 'three';
+import { CallPipe } from './call-pipe';
 import { useDefaultObservers, DefaultObserversState } from './handlers';
 import { useHistorian, History } from './use-historian';
 
@@ -41,7 +42,7 @@ export const Mesh = forwardRef<Three.Mesh, MeshProps>((props, ref) => {
             assignRef(ref, instance);
           }}
           {...props}
-          {...handlers}
+          {...CallPipe.assign(props, handlers)}
         />
       </MeshObserverContext.Provider>
     </MeshContext.Provider>

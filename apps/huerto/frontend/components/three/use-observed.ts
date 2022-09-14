@@ -52,16 +52,7 @@ export function useObserved<A extends readonly ObservedHook<any, any, any>[]>(
         state: Object.assign(prev.state, {
           [observed.key]: observed.state,
         }),
-        handlers: Object.entries(observed.handlers).reduce(
-          (handlers, [name, receiver]) => {
-            // instantiate and add receiver
-            (handlers[name as KeyOf<Handlers>] =
-              handlers[name] ?? createCallPipe()).add(receiver);
-
-            return handlers;
-          },
-          prev.handlers,
-        ),
+        handlers: <Handlers>CallPipe.assign(prev.handlers, observed.handlers),
       };
     },
     { state: {}, handlers: {} } as Observation<State, Handlers>,
@@ -70,7 +61,14 @@ export function useObserved<A extends readonly ObservedHook<any, any, any>[]>(
   return useMemo(() => observation, Object.values(observation.state));
 }
 
-function flat<
+export function mergeHandlers(
+  props: Record<string, any>,
+  sources: { handlers: Record<string, CallPipe> }[],
+) {
+  return CallPipe.assign(props, ...sources.map(v => v.handlers));
+}
+
+export function mergeObservations<
   A extends Observation<Record<string, any>, Record<string, CallPipe<AnyFunc>>>,
 >(observed: A[]) {
   observed.reduce(
@@ -78,11 +76,8 @@ function flat<
       // merge state
       Object.assign(merged.state, next.state);
 
-      // merged callbacks
-      for (const [name, pipe] of Object.entries(next.handlers)) {
-        merged.handlers[name] ??= createCallPipe();
-        merged.handlers[name].add(pipe);
-      }
+      // merge callbacks
+      CallPipe.assign(merged, next.handlers);
 
       return merged;
     },
