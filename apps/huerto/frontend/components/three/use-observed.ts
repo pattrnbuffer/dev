@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { KeyOf, ValueOf } from '~/frontend/types';
+import { useMemo } from 'react';
+import { KeyOf } from '~/frontend/types';
+import { CallPipe, createCallPipe } from './call-pipe';
 
 type AnyFunc = (...args: any[]) => any;
 
@@ -36,24 +37,26 @@ export function useObserved<A extends readonly ObservedHook<any, any, any>[]>(
     ];
   };
 
-  type Merged = Observation<
-    { [T in Entries[number] as T[0]]: T[1] },
-    { [k in keyof Entries[number][2]]: EventPipe<Entries[number][2][k]> }
-  >;
+  type State = {
+    [T in Entries[number] as T[0]]: T[1];
+  };
+
+  type Handlers = {
+    [k in keyof Entries[number][2]]: CallPipe<Entries[number][2][k] | AnyFunc>;
+  };
 
   const observed = observers.map(useObserved => useObserved());
-  return observed.reduce(
+  const observation = observed.reduce(
     (prev, observed) => {
       return {
-        state: Object.assign(prev.state, { [observed.key]: observed.state }),
+        state: Object.assign(prev.state, {
+          [observed.key]: observed.state,
+        }),
         handlers: Object.entries(observed.handlers).reduce(
-          (handlers, [name, handle]) => {
-            const eventPipe =
-              (handlers[name] as EventPipe<typeof handle>) ??
-              createEventPipe<typeof handle>();
-
-            handlers[name as KeyOf<Merged['handlers']>] =
-              eventPipe.include(handle);
+          (handlers, [name, receiver]) => {
+            // instantiate and add receiver
+            (handlers[name as KeyOf<Handlers>] =
+              handlers[name] ?? createCallPipe()).add(receiver);
 
             return handlers;
           },
@@ -61,27 +64,28 @@ export function useObserved<A extends readonly ObservedHook<any, any, any>[]>(
         ),
       };
     },
-    { state: {}, handlers: {} } as Merged,
-  ) as Merged;
-}
-
-type EventPipe<T extends AnyFunc> = {
-  (...args: Parameters<T>): void;
-  include: (handle: T) => EventPipe<T>;
-};
-
-function createEventPipe<T extends AnyFunc>(): EventPipe<T> {
-  const set = new Set<T>();
-
-  const pipe = Object.assign(
-    (...args: Parameters<T>) => set.forEach(handle => handle(...args)),
-    {
-      include(handle: T) {
-        set.add(handle);
-        return pipe;
-      },
-    },
+    { state: {}, handlers: {} } as Observation<State, Handlers>,
   );
 
-  return pipe;
+  return useMemo(() => observation, Object.values(observation.state));
+}
+
+function flat<
+  A extends Observation<Record<string, any>, Record<string, CallPipe<AnyFunc>>>,
+>(observed: A[]) {
+  observed.reduce(
+    (merged, next) => {
+      // merge state
+      Object.assign(merged.state, next.state);
+
+      // merged callbacks
+      for (const [name, pipe] of Object.entries(next.handlers)) {
+        merged.handlers[name] ??= createCallPipe();
+        merged.handlers[name].add(pipe);
+      }
+
+      return merged;
+    },
+    { state: {}, handlers: {} } as A,
+  );
 }
