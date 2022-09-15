@@ -2,23 +2,17 @@ import { FC } from 'react';
 import { Vector3 } from 'three';
 
 import { Box } from './box';
+import { GridProps, GridElementProps } from './grid';
 
-export type GridProps = {
-  size?: number;
-  unit?: number;
-  as?: GridElement;
+type ElectricGridProps = GridProps & {
+  as: FC<ElectricGridElementProps>;
 };
-export type GridElement = FC<GridElementProps>;
-export type GridElementProps = {
-  position?: number[];
-  translate?: [number, number, number];
-};
+type ElectricGridElementProps = GridElementProps;
 
-export const Grid: FC<GridProps> = ({
+export const ElectricGrid: FC<ElectricGridProps> = ({
   size: length = 4,
   unit = 1,
   as: Element = Box,
-  ...props
 }) => {
   const list = Array.from({ length }).flatMap((_, x) =>
     Array.from({ length }).map((_, y) => {

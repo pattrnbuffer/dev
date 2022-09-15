@@ -2,8 +2,8 @@ import { Canvas } from '@react-three/fiber';
 
 import { FC } from 'react';
 
-import { Grid } from './grid';
 import { useGlobal } from './use-global';
+import { Windfarm } from './windfarm';
 
 export const Renderer: FC = () => {
   const global = useGlobal();
@@ -14,7 +14,7 @@ export const Renderer: FC = () => {
       <directionalLight color="red" position={[0, 0, global.depth]} />
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Grid />
+      <Windfarm />
     </Canvas>
   );
 };

@@ -1,37 +1,28 @@
 import { ThreeElements } from '@react-three/fiber';
 import { FC, useEffect } from 'react';
 import { Mesh, useMesh, useMeshObserver } from './mesh';
-import { useRotation } from './reactions';
+import { Position, PositionProps, Rotator, RotatorProps } from './aspects';
 
-export type BoxProps = ThreeElements['mesh'] & {
-  translate: [number, number, number];
-};
+export type BoxProps = ThreeElements['mesh'] & PositionProps & RotatorProps;
 
-export const Box: FC<BoxProps> = ({ translate, ...props }) => {
+export const Box: FC<BoxProps> = ({
+  translate,
+  rotator,
+  children,
+  ...props
+}) => {
   return (
     <Mesh {...props}>
       <Position translate={translate} />
       <Scale />
-      <Rotation />
+      <Rotator rotator={rotator} />
       <ReactiveMaterial />
 
       <boxGeometry args={[1, 1, 1]} />
+
+      {children}
     </Mesh>
   );
-};
-
-const Position: FC<{ translate: number[] }> = ({ translate, ...props }) => {
-  const mesh = useMesh();
-  const [x, y, z] = Array.from({ ...[0, 0, 0], ...translate, length: 3 });
-
-  useEffect(() => {
-    mesh.current?.translateX(x).translateY(y).translateZ(z);
-    return () => {
-      mesh.current?.translateX(-x).translateY(-y).translateZ(-z);
-    };
-  }, [mesh, x, y, z]);
-
-  return null;
 };
 
 const Scale = () => {
@@ -41,11 +32,6 @@ const Scale = () => {
     const scale = state.clicked ? 1.5 : 1;
     mesh.current.scale.set(scale, scale, scale);
   }, [state.clicked]);
-  return null;
-};
-
-const Rotation = () => {
-  useRotation();
   return null;
 };
 
