@@ -1,8 +1,8 @@
 import { atom, useAtom } from 'jotai';
 
-const depthAtom = atom<number>(5);
+export const depthAtom = atom<number>(5);
 
-const globalAtom = atom(get => {
+export const globalAtom = atom(get => {
   return {
     depth: get(depthAtom),
   };

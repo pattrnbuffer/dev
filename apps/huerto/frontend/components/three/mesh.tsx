@@ -41,7 +41,6 @@ export const Mesh = forwardRef<Three.Mesh, MeshProps>((props, ref) => {
             mesh.current = instance!;
             assignRef(ref, instance);
           }}
-          {...props}
           {...CallPipe.assign(props, handlers)}
         />
       </MeshObserverContext.Provider>

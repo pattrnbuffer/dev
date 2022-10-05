@@ -1,9 +1,12 @@
 import { Canvas } from '@react-three/fiber';
 
-import { FC } from 'react';
+import { FC, useEffect, useMemo } from 'react';
+import { useUpdateAtom } from 'jotai/utils';
+import { useAtomRef } from './atom-ref';
 
-import { useGlobal } from './use-global';
+import { depthAtom, useGlobal } from './use-global';
 import { Windfarm } from './windfarm';
+import { random } from 'lodash';
 
 export const Renderer: FC = () => {
   const global = useGlobal();

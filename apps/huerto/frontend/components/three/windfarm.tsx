@@ -1,21 +1,27 @@
-import { FC, useEffect, useMemo, useState } from 'react';
-import { Vector3 } from 'three';
+import { FC, ReactNode, useEffect, useMemo, useState } from 'react';
+import { Vector2, Vector3 } from 'three';
 
 import { Box } from './box';
 import { GridProps, GridElementProps } from './grid';
 import { useMeshObserver } from './mesh';
+import { Unbox } from './Unbox';
 
-type WindfarmProps = GridProps;
+type WindfarmProps = GridProps & {
+  children?: ReactNode;
+  generator?: (weather: Weather[]) => (number | undefined)[];
+};
 
 export const Windfarm: FC<WindfarmProps> = ({
-  size: length = 4,
+  size: length = 6,
   unit = 1,
-  as: Element = Box,
+  onClick,
+  generator: generate = rotationRatesFor,
+  children,
 }) => {
-  const [weather, setWeather] = useState<
-    { x: number; y: number; i: number; speed: number }[]
-  >(() => Array.from({ length }));
-  const rotationRates = useMemo(() => rotationRatesFor(weather), [weather]);
+  const [weather, setWeather] = useState<Weather[]>(() =>
+    Array.from({ length }),
+  );
+  const turbines = useMemo(() => generate(weather), [weather]);
   const list = Array.from({ length }).flatMap((_, x) =>
     Array.from({ length }).map((_, y) => {
       return [x, y];
@@ -27,11 +33,14 @@ export const Windfarm: FC<WindfarmProps> = ({
     // does not come with group context baked in
     <>
       {list.map(([x, y], i) => (
-        <Element
+        <Box
           key={[x, y, i].join()}
           position={[x, y, 0]}
           translate={[-offset, -offset, 0]}
-          rotator={[-1, 0, 0, rotationRates?.[i] ?? 0.125]}
+          rotator={[-1, 0, 0, turbines?.[i] ?? 0.125]}
+          onClick={() => {
+            onClick?.([x, y, i], { ...weather[i], turbines: turbines });
+          }}
         >
           <Anemometer
             onChange={({ speed }) => {
@@ -42,7 +51,8 @@ export const Windfarm: FC<WindfarmProps> = ({
               });
             }}
           />
-        </Element>
+          {children}
+        </Box>
       ))}
     </>
   );
@@ -54,13 +64,13 @@ type AnemometerProps = {
 const Anemometer: FC<AnemometerProps> = ({ onChange }) => {
   const { state, history } = useMeshObserver();
 
-  history.reduceRight((acc, st, i, list) => {
-    const { 0: first, [i - 1]: prev, [i + 1]: next, [length - 1]: last } = list;
-    return acc;
-  }, []);
+  const avg =
+    history.slice(-4).reduce((speed, st, i, { [i - 1]: prev }) => {
+      return speed + st.value.wheel;
+    }, 0) / 4;
 
   useEffect(() => {
-    onChange({ speed: state.wheel });
+    onChange({ speed: avg });
   }, [state]);
 
   return null;

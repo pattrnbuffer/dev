@@ -7,6 +7,7 @@ export type GridProps = {
   size?: number;
   unit?: number;
   as?: GridElement;
+  onClick?: (position: GridPosition, ...args: any[]) => void;
 };
 export type GridElement = FC<GridElementProps>;
 export type GridElementProps = {
@@ -14,11 +15,13 @@ export type GridElementProps = {
   translate?: [number, number, number];
 };
 
+export type GridPosition = [x: number, y: number, i: number];
+
 export const Grid: FC<GridProps> = ({
   size: length = 4,
   unit = 1,
   as: Element = Box,
-  ...props
+  onClick,
 }) => {
   const list = Array.from({ length }).flatMap((_, x) =>
     Array.from({ length }).map((_, y) => {
@@ -35,6 +38,13 @@ export const Grid: FC<GridProps> = ({
           key={[x, y, i].join()}
           position={[x, y, 0]}
           translate={[-offset, -offset, 0]}
+          onClick={
+            onClick == null
+              ? undefined
+              : (...args) => {
+                  onClick([x, y, i], ...args);
+                }
+          }
         />
       ))}
     </>

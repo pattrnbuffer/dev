@@ -47,3 +47,33 @@ export function useHovered(observed?: Record<string, boolean>) {
     },
   } as const;
 }
+
+export function useWheelHandles(onUpdate: (hovered: number) => void) {
+  return {
+    onWheel(event: ThreeEvent<WheelEvent>) {
+      onUpdate(event.nativeEvent.deltaY / event.nativeEvent.clientX);
+    },
+  };
+}
+export function useHoverHandles(onUpdate: (hovered: boolean) => void) {
+  return {
+    onPointerOver: () => onUpdate(true),
+    onPointerOut: () => onUpdate(false),
+  };
+}
+
+const handles = {
+  click: (onUpdate: () => void) => ({
+    onClick: () => onUpdate(),
+  }),
+
+  wheel: (onUpdate: (hovered: number) => void) => ({
+    onWheel: (event: ThreeEvent<WheelEvent>) =>
+      onUpdate(event.nativeEvent.deltaY / event.nativeEvent.clientX),
+  }),
+
+  hover: (onUpdate: (hovered: boolean) => void) => ({
+    onPointerOver: () => onUpdate(true),
+    onPointerOut: () => onUpdate(false),
+  }),
+};
