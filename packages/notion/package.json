@@ -1,6 +1,6 @@
 {
   "name": "@bffr/notion",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "a notion client",
   "main": "src/index.ts",
   "scripts": {

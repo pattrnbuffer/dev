@@ -1,6 +1,6 @@
 {
   "name": "@bffr/hooks-web",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A tailored set of hooks for web 👀",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -1,6 +1,6 @@
 {
   "name": "@bffr/prompts",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A toolbox built on prompts.",
   "main": "build/index.js",
   "types": "./build/index.d.ts",

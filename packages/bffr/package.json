@@ -1,6 +1,6 @@
 {
   "name": "@bffr/dev",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "scripts": {
     "lint": "gts lint",
     "clean": "gts clean",
