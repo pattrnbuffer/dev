@@ -8,5 +8,6 @@
     "lib": ["DOM"],
     "jsx": "react-jsx"
   },
-  "exclude": ["dist"]
+  "include": ["src/**/*"],
+  "exclude": ["**/*.test.*"]
 }
