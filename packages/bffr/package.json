@@ -11,9 +11,9 @@
     "posttest": "npm run lint"
   },
   "dependencies": {
-    "@dev/hooks": "workspace:*",
-    "@dev/stator": "workspace:*",
-    "@dev/tools": "workspace:*"
+    "@bffr/hooks": "workspace:*",
+    "@bffr/stator": "workspace:*",
+    "@bffr/tools": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^18.11.0",

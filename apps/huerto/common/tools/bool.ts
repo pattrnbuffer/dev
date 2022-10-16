@@ -1,1 +1,1 @@
-export { boolean as bool } from '@dev/tools';
+export { boolean as bool } from '@bffr/tools';

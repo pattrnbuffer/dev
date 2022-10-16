@@ -1,5 +1,5 @@
-import { createTimeout } from '@dev/tools';
-import { useMountedRef } from '@dev/hooks';
+import { createTimeout } from '@bffr/tools';
+import { useMountedRef } from '@bffr/hooks';
 import React, {
   CSSProperties,
   FC,

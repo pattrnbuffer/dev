@@ -1837,9 +1837,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bffr/dev@workspace:packages/bffr"
   dependencies:
-    "@dev/hooks": "workspace:*"
-    "@dev/stator": "workspace:*"
-    "@dev/tools": "workspace:*"
+    "@bffr/hooks": "workspace:*"
+    "@bffr/stator": "workspace:*"
+    "@bffr/tools": "workspace:*"
     "@types/node": ^18.11.0
     "@types/react": ^18.0.21
     "@types/react-native": ^0.70.4
@@ -1848,6 +1848,164 @@ __metadata:
     ts-jest: ^29.0.3
     ts-node: ^10.9.1
     typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@bffr/hooks-web@workspace:packages/hooks-web":
+  version: 0.0.0-use.local
+  resolution: "@bffr/hooks-web@workspace:packages/hooks-web"
+  dependencies:
+    "@bffr/preset": "workspace:^"
+    "@bffr/tools": "workspace:^"
+    typescript: ^4.6.2
+  languageName: unknown
+  linkType: soft
+
+"@bffr/hooks@portal:../hooks/::locator=%40bffr%2Fstator%40workspace%3Apackages%2Fstator":
+  version: 0.0.0-use.local
+  resolution: "@bffr/hooks@portal:../hooks/::locator=%40bffr%2Fstator%40workspace%3Apackages%2Fstator"
+  dependencies:
+    "@bffr/tools": "workspace:^"
+    "@evanrs/fetch": ^0.2.0
+  languageName: node
+  linkType: soft
+
+"@bffr/hooks@workspace:*, @bffr/hooks@workspace:^, @bffr/hooks@workspace:packages/hooks":
+  version: 0.0.0-use.local
+  resolution: "@bffr/hooks@workspace:packages/hooks"
+  dependencies:
+    "@bffr/preset": "workspace:^"
+    "@bffr/tools": "workspace:^"
+    "@evanrs/fetch": ^0.2.0
+    typescript: ^4.6.2
+  languageName: unknown
+  linkType: soft
+
+"@bffr/install@workspace:packages/install":
+  version: 0.0.0-use.local
+  resolution: "@bffr/install@workspace:packages/install"
+  dependencies:
+    "@types/node": ^17.0.15
+    gts: ^3.1.0
+    jest: ^27.4.7
+    ts-jest: ^27.1.3
+    typescript: ^4.5.5
+    zx: ^7.1.1
+  languageName: unknown
+  linkType: soft
+
+"@bffr/layer@workspace:packages/layer":
+  version: 0.0.0-use.local
+  resolution: "@bffr/layer@workspace:packages/layer"
+  dependencies:
+    "@bffr/preset": "workspace:^"
+    "@types/jest": ^27.4.0
+    "@types/node": ^17.0.15
+    "@types/prettier": ^2.4.3
+    "@types/react": ^17.0.39
+    gts: ^3.1.0
+    jest: ^27.4.7
+    jest-circus: ^27.4.6
+    jest-watch-typeahead: ^1.0.0
+    react: ^17.0.2
+    typescript: ^4.5.5
+  languageName: unknown
+  linkType: soft
+
+"@bffr/node-hue-api@workspace:^, @bffr/node-hue-api@workspace:packages/node-hude-api":
+  version: 0.0.0-use.local
+  resolution: "@bffr/node-hue-api@workspace:packages/node-hude-api"
+  dependencies:
+    "@peter-murray/hue-bridge-model": ^2.0.1
+    "@types/chai": ^4.3.0
+    "@types/mocha": ^9.0.0
+    "@types/node": ^14.14.31
+    "@types/node-fetch": ^2.5.12
+    bottleneck: ^2.19.5
+    chai: ~4.3.4
+    mocha: ^9.1.3
+    node-fetch: ^2.6.1
+    ts-node: ^10.4.0
+    typescript: ^4.5.3
+  languageName: unknown
+  linkType: soft
+
+"@bffr/notion@workspace:packages/notion":
+  version: 0.0.0-use.local
+  resolution: "@bffr/notion@workspace:packages/notion"
+  dependencies:
+    "@bffr/preset": "workspace:^"
+    "@notionhq/client": ^0.4.13
+    "@types/node": ^17.0.15
+    gts: ^3.1.0
+    jest: ^27.4.7
+    typescript: ^4.5.5
+  languageName: unknown
+  linkType: soft
+
+"@bffr/preset@portal:../preset/::locator=%40bffr%2Fstator%40workspace%3Apackages%2Fstator":
+  version: 0.0.0-use.local
+  resolution: "@bffr/preset@portal:../preset/::locator=%40bffr%2Fstator%40workspace%3Apackages%2Fstator"
+  dependencies:
+    gts: ^3.1.0
+    jest: ^27.4.7
+    ts-jest: ^27.1.3
+  languageName: node
+  linkType: soft
+
+"@bffr/preset@workspace:^, @bffr/preset@workspace:packages/preset":
+  version: 0.0.0-use.local
+  resolution: "@bffr/preset@workspace:packages/preset"
+  dependencies:
+    "@types/node": ^17.0.15
+    gts: ^3.1.0
+    jest: ^27.4.7
+    ts-jest: ^27.1.3
+    typescript: ^4.5.5
+  languageName: unknown
+  linkType: soft
+
+"@bffr/prompts@workspace:^, @bffr/prompts@workspace:packages/prompts":
+  version: 0.0.0-use.local
+  resolution: "@bffr/prompts@workspace:packages/prompts"
+  dependencies:
+    "@bffr/preset": "workspace:^"
+    prompts: ^2.4.2
+    typescript: ^4.6.2
+  languageName: unknown
+  linkType: soft
+
+"@bffr/stator@workspace:*, @bffr/stator@workspace:packages/stator":
+  version: 0.0.0-use.local
+  resolution: "@bffr/stator@workspace:packages/stator"
+  dependencies:
+    "@bffr/hooks": "portal:../hooks/"
+    "@bffr/preset": "portal:../preset/"
+    "@bffr/tools": "portal:../tools/"
+    "@evanrs/fetch": ^0.2.0
+    "@sindresorhus/is": 4.6.0
+    "@types/react": ^18.0.21
+    bun-types: ^0.2.0
+    react: ^18.2.0
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@bffr/tools@portal:../tools/::locator=%40bffr%2Fstator%40workspace%3Apackages%2Fstator":
+  version: 0.0.0-use.local
+  resolution: "@bffr/tools@portal:../tools/::locator=%40bffr%2Fstator%40workspace%3Apackages%2Fstator"
+  dependencies:
+    "@mobily/ts-belt": ^3.11.0
+  languageName: node
+  linkType: soft
+
+"@bffr/tools@workspace:*, @bffr/tools@workspace:^, @bffr/tools@workspace:packages/tools":
+  version: 0.0.0-use.local
+  resolution: "@bffr/tools@workspace:packages/tools"
+  dependencies:
+    "@bffr/preset": "workspace:^"
+    "@mobily/ts-belt": ^3.11.0
+    typescript: ^4.6.2
   languageName: unknown
   linkType: soft
 
@@ -2732,164 +2890,6 @@ __metadata:
   checksum: 4c96bd5b641b02e5e1a64cd3eb6b8a67cb15d8f93699df4549f5f19d6dd30e7c5f12bfa70aaa38582d1cc4e4ab4890a9273c612608e85280b033e23820907d16
   languageName: node
   linkType: hard
-
-"@dev/hooks-web@workspace:packages/hooks-web":
-  version: 0.0.0-use.local
-  resolution: "@dev/hooks-web@workspace:packages/hooks-web"
-  dependencies:
-    "@dev/preset": "workspace:^"
-    "@dev/tools": "workspace:^"
-    typescript: ^4.6.2
-  languageName: unknown
-  linkType: soft
-
-"@dev/hooks@portal:../hooks/::locator=%40dev%2Fstator%40workspace%3Apackages%2Fstator":
-  version: 0.0.0-use.local
-  resolution: "@dev/hooks@portal:../hooks/::locator=%40dev%2Fstator%40workspace%3Apackages%2Fstator"
-  dependencies:
-    "@dev/tools": "workspace:^"
-    "@evanrs/fetch": ^0.2.0
-  languageName: node
-  linkType: soft
-
-"@dev/hooks@workspace:*, @dev/hooks@workspace:^, @dev/hooks@workspace:packages/hooks":
-  version: 0.0.0-use.local
-  resolution: "@dev/hooks@workspace:packages/hooks"
-  dependencies:
-    "@dev/preset": "workspace:^"
-    "@dev/tools": "workspace:^"
-    "@evanrs/fetch": ^0.2.0
-    typescript: ^4.6.2
-  languageName: unknown
-  linkType: soft
-
-"@dev/install@workspace:packages/install":
-  version: 0.0.0-use.local
-  resolution: "@dev/install@workspace:packages/install"
-  dependencies:
-    "@types/node": ^17.0.15
-    gts: ^3.1.0
-    jest: ^27.4.7
-    ts-jest: ^27.1.3
-    typescript: ^4.5.5
-    zx: ^7.1.1
-  languageName: unknown
-  linkType: soft
-
-"@dev/layer@workspace:packages/layer":
-  version: 0.0.0-use.local
-  resolution: "@dev/layer@workspace:packages/layer"
-  dependencies:
-    "@dev/preset": "workspace:^"
-    "@types/jest": ^27.4.0
-    "@types/node": ^17.0.15
-    "@types/prettier": ^2.4.3
-    "@types/react": ^17.0.39
-    gts: ^3.1.0
-    jest: ^27.4.7
-    jest-circus: ^27.4.6
-    jest-watch-typeahead: ^1.0.0
-    react: ^17.0.2
-    typescript: ^4.5.5
-  languageName: unknown
-  linkType: soft
-
-"@dev/node-hue-api@workspace:^, @dev/node-hue-api@workspace:packages/node-hude-api":
-  version: 0.0.0-use.local
-  resolution: "@dev/node-hue-api@workspace:packages/node-hude-api"
-  dependencies:
-    "@peter-murray/hue-bridge-model": ^2.0.1
-    "@types/chai": ^4.3.0
-    "@types/mocha": ^9.0.0
-    "@types/node": ^14.14.31
-    "@types/node-fetch": ^2.5.12
-    bottleneck: ^2.19.5
-    chai: ~4.3.4
-    mocha: ^9.1.3
-    node-fetch: ^2.6.1
-    ts-node: ^10.4.0
-    typescript: ^4.5.3
-  languageName: unknown
-  linkType: soft
-
-"@dev/notion@workspace:packages/notion":
-  version: 0.0.0-use.local
-  resolution: "@dev/notion@workspace:packages/notion"
-  dependencies:
-    "@dev/preset": "workspace:^"
-    "@notionhq/client": ^0.4.13
-    "@types/node": ^17.0.15
-    gts: ^3.1.0
-    jest: ^27.4.7
-    typescript: ^4.5.5
-  languageName: unknown
-  linkType: soft
-
-"@dev/preset@portal:../preset/::locator=%40dev%2Fstator%40workspace%3Apackages%2Fstator":
-  version: 0.0.0-use.local
-  resolution: "@dev/preset@portal:../preset/::locator=%40dev%2Fstator%40workspace%3Apackages%2Fstator"
-  dependencies:
-    gts: ^3.1.0
-    jest: ^27.4.7
-    ts-jest: ^27.1.3
-  languageName: node
-  linkType: soft
-
-"@dev/preset@workspace:^, @dev/preset@workspace:packages/preset":
-  version: 0.0.0-use.local
-  resolution: "@dev/preset@workspace:packages/preset"
-  dependencies:
-    "@types/node": ^17.0.15
-    gts: ^3.1.0
-    jest: ^27.4.7
-    ts-jest: ^27.1.3
-    typescript: ^4.5.5
-  languageName: unknown
-  linkType: soft
-
-"@dev/prompts@workspace:^, @dev/prompts@workspace:packages/prompts":
-  version: 0.0.0-use.local
-  resolution: "@dev/prompts@workspace:packages/prompts"
-  dependencies:
-    "@dev/preset": "workspace:^"
-    prompts: ^2.4.2
-    typescript: ^4.6.2
-  languageName: unknown
-  linkType: soft
-
-"@dev/stator@workspace:*, @dev/stator@workspace:packages/stator":
-  version: 0.0.0-use.local
-  resolution: "@dev/stator@workspace:packages/stator"
-  dependencies:
-    "@dev/hooks": "portal:../hooks/"
-    "@dev/preset": "portal:../preset/"
-    "@dev/tools": "portal:../tools/"
-    "@evanrs/fetch": ^0.2.0
-    "@sindresorhus/is": 4.6.0
-    "@types/react": ^18.0.21
-    bun-types: ^0.2.0
-    react: ^18.2.0
-    typescript: ^4.8.4
-  languageName: unknown
-  linkType: soft
-
-"@dev/tools@portal:../tools/::locator=%40dev%2Fstator%40workspace%3Apackages%2Fstator":
-  version: 0.0.0-use.local
-  resolution: "@dev/tools@portal:../tools/::locator=%40dev%2Fstator%40workspace%3Apackages%2Fstator"
-  dependencies:
-    "@mobily/ts-belt": ^3.11.0
-  languageName: node
-  linkType: soft
-
-"@dev/tools@workspace:*, @dev/tools@workspace:^, @dev/tools@workspace:packages/tools":
-  version: 0.0.0-use.local
-  resolution: "@dev/tools@workspace:packages/tools"
-  dependencies:
-    "@dev/preset": "workspace:^"
-    "@mobily/ts-belt": ^3.11.0
-    typescript: ^4.6.2
-  languageName: unknown
-  linkType: soft
 
 "@emotion/babel-plugin@npm:^11.10.0":
   version: 11.10.0
@@ -8620,10 +8620,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "daily@workspace:apps/daily"
   dependencies:
+    "@bffr/node-hue-api": "workspace:^"
+    "@bffr/preset": "workspace:^"
+    "@bffr/prompts": "workspace:^"
     "@chakra-ui/react": ^1.8.3
-    "@dev/node-hue-api": "workspace:^"
-    "@dev/preset": "workspace:^"
-    "@dev/prompts": "workspace:^"
     "@emotion/react": 11
     "@emotion/styled": 11
     "@fontsource/poppins": ^4.5.9
@@ -9039,7 +9039,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "dev@workspace:."
   dependencies:
-    "@dev/preset": "workspace:^"
+    "@bffr/preset": "workspace:^"
     "@types/node": ^17.0.15
     gts: ^3.1.0
     typescript: ^4.5.5
@@ -11511,12 +11511,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "huerto@workspace:apps/huerto"
   dependencies:
+    "@bffr/hooks": "workspace:^"
+    "@bffr/node-hue-api": "workspace:^"
+    "@bffr/preset": "workspace:^"
+    "@bffr/prompts": "workspace:^"
+    "@bffr/tools": "workspace:^"
     "@chakra-ui/react": ^1.8.3
-    "@dev/hooks": "workspace:^"
-    "@dev/node-hue-api": "workspace:^"
-    "@dev/preset": "workspace:^"
-    "@dev/prompts": "workspace:^"
-    "@dev/tools": "workspace:^"
     "@emotion/react": ^11.10.0
     "@emotion/styled": ^11.10.0
     "@evanrs/fetch": ^0.2.0
@@ -17615,10 +17615,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "regimen@workspace:apps/regimen"
   dependencies:
+    "@bffr/preset": "workspace:^"
+    "@bffr/prompts": "workspace:^"
+    "@bffr/tools": "workspace:^"
     "@chakra-ui/react": ^1.8.3
-    "@dev/preset": "workspace:^"
-    "@dev/prompts": "workspace:^"
-    "@dev/tools": "workspace:^"
     "@emotion/react": 11
     "@emotion/styled": 11
     "@swc/core": ^1.2.146

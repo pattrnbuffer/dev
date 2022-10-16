@@ -1,5 +1,5 @@
 import { PromptObject } from 'prompts';
-import { promptFor } from '@dev/prompts';
+import { promptFor } from '@bffr/prompts';
 
 // type CreatePrompter<T, R> = () => Prompter<T, R>;
 export type Prompter<S, A> = (state?: S, answer?: A) => PrompterState<S>;

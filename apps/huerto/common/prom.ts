@@ -1,4 +1,4 @@
-import { func } from '@dev/tools';
+import { func } from '@bffr/tools';
 
 export const all = <T, R>(
   list: T[],
@@ -18,4 +18,4 @@ export async function siphon<T, U>(
   return [await source, await sink(ref)];
 }
 
-export { prom } from '@dev/tools';
+export { prom } from '@bffr/tools';

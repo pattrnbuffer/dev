@@ -1,3 +1,3 @@
 export {}
 
-export * from '@dev/hooks'
+export * from '@bffr/hooks'

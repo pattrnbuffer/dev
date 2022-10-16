@@ -1,3 +1,3 @@
 module.exports = {
-  ...require('@dev/preset/.prettierrc.js'),
+  ...require('@bffr/preset/.prettierrc.js'),
 };

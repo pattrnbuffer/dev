@@ -1,7 +1,7 @@
 #! /usr/bin/env yarn ts-node
 import * as fs from 'fs/promises';
 import prompts from 'prompts';
-import * as idiots from '@dev/node-hue-api';
+import * as idiots from '@bffr/node-hue-api';
 import * as pkg from '../package.json';
 import { prom } from '../common';
 

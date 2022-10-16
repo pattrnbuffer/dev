@@ -1,6 +1,6 @@
 #! /usr/bin/env yarn ts-node
 
-import * as idiots from '@dev/node-hue-api';
+import * as idiots from '@bffr/node-hue-api';
 import got from 'got';
 import { all } from '../common';
 import { Links, Link, LinkCreated } from './links';

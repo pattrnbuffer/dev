@@ -36,5 +36,11 @@ export function createMountedRef(state: RefObject<boolean>) {
     (...params: Args) =>
       commit(() => callback(...params));
 
-  return Object.assign(mounted, { commit, guard });
+  return Object.assign(mounted, {
+    get mounted() {
+      return mounted();
+    },
+    commit,
+    guard,
+  });
 }

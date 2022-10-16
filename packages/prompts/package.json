@@ -1,5 +1,5 @@
 {
-  "name": "@dev/prompts",
+  "name": "@bffr/prompts",
   "version": "1.0.0",
   "description": "A toolbox built on prompts.",
   "main": "build/index.js",
@@ -22,7 +22,7 @@
     "prompts": "^2.4.2"
   },
   "devDependencies": {
-    "@dev/preset": "workspace:^",
+    "@bffr/preset": "workspace:^",
     "typescript": "^4.6.2"
   }
 }

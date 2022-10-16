@@ -1,5 +1,5 @@
 {
-  "display": "@dev/preset",
+  "display": "@bffr/preset",
   "extends": "gts/tsconfig-google.json",
   "compilerOptions": {
     "target": "es2021",

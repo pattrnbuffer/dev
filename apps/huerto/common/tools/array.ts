@@ -1,1 +1,1 @@
-export { array } from '@dev/tools';
+export { array } from '@bffr/tools';

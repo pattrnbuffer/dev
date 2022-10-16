@@ -1,8 +1,8 @@
 #! /usr/bin/env yarn ts-node
 import { argv } from 'zx';
 import { DateTime } from 'luxon';
-// TODO: definitely call it "@dev/promps"
-import { PT } from '@dev/prompts';
+// TODO: definitely call it "@bffr/promps"
+import { PT } from '@bffr/prompts';
 
 // does this explain the props from the prompts? or the arguments to the script?
 const MainProps = {};

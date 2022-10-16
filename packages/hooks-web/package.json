@@ -1,5 +1,5 @@
 {
-  "name": "@dev/hooks-web",
+  "name": "@bffr/hooks-web",
   "version": "1.0.0",
   "description": "The definitive collection of idiomatic hooks 👀",
   "main": "build/index.js",
@@ -19,10 +19,10 @@
   },
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
-    "@dev/preset": "workspace:^",
+    "@bffr/preset": "workspace:^",
     "typescript": "^4.6.2"
   },
   "dependencies": {
-    "@dev/tools": "workspace:^"
+    "@bffr/tools": "workspace:^"
   }
 }

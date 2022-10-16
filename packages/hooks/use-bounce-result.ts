@@ -1,4 +1,4 @@
-import { isNumber, createTimeout } from '@dev/tools';
+import { isNumber, createTimeout } from '@bffr/tools';
 import { DependencyList, useMemo, useState } from 'react';
 
 import { useMountedEffect } from './use-mounted-effect';

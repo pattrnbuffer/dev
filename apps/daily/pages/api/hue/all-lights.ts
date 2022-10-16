@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import * as idiots from '@dev/node-hue-api';
+import * as idiots from '@bffr/node-hue-api';
 
 export default async function lights(
   req: NextApiRequest,

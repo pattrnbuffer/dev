@@ -1,6 +1,6 @@
 {
-  "name": "@dev/hooks",
-  "version": "1.0.0",
+  "name": "@bffr/hooks",
+  "version": "0.0.0",
   "description": "The definitive collection of idiomatic hooks 👀",
   "main": "build/index.js",
   "types": "./build/index.d.ts",
@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
-    "@dev/preset": "workspace:^",
+    "@bffr/preset": "workspace:^",
     "typescript": "^4.6.2"
   },
   "dependencies": {
-    "@dev/tools": "workspace:^",
+    "@bffr/tools": "workspace:^",
     "@evanrs/fetch": "^0.2.0"
   }
 }

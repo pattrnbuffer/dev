@@ -13,8 +13,8 @@ export {};
 //   useEvent,
 //   useHighFrequencyCapacitor,
 //   useMountedEffect,
-// } from '@dev/hooks';
-// import { number as nm } from '@dev/tools';
+// } from '@bffr/hooks';
+// import { number as nm } from '@bffr/tools';
 
 // import { ColorConverter } from '~/common/npm-cie-rgb-color-converter';
 // import { AllLightsResult } from '~/frontend';

@@ -1,5 +1,5 @@
 {
-  "extends": "@dev/preset/tsconfig.json",
+  "extends": "@bffr/preset/tsconfig.json",
   "compilerOptions": {
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,

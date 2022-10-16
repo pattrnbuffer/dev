@@ -9,7 +9,7 @@ export function useAllLightsColorSelection(selection?: [number, number]) {
       x = Math.min(x, 1);
       y = Math.min(y, 1);
 
-      // TODO: useMountedState from @dev/hooks
+      // TODO: useMountedState from @bffr/hooks
       fetch(`/api/hue/all-lights-color/${x}/${y}`).then(() =>
         setState(selection),
       );

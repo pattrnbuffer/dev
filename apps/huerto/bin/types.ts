@@ -1,4 +1,4 @@
-import * as idiots from '@dev/node-hue-api';
+import * as idiots from '@bffr/node-hue-api';
 
 export type Promisable<T> = T | Promise<T>;
 

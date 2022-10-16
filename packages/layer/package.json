@@ -1,5 +1,5 @@
 {
-  "name": "@dev/layer",
+  "name": "@bffr/layer",
   "version": "1.0.0",
   "description": "multi dimensional 💫 layer reducers",
   "main": "src/index.ts",
@@ -27,7 +27,7 @@
     "react": "^17.0.2"
   },
   "devDependencies": {
-    "@dev/preset": "workspace:^",
+    "@bffr/preset": "workspace:^",
     "@types/jest": "^27.4.0",
     "@types/node": "^17.0.15",
     "@types/prettier": "^2.4.3",

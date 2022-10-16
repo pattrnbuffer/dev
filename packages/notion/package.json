@@ -1,5 +1,5 @@
 {
-  "name": "@dev/notion",
+  "name": "@bffr/notion",
   "version": "1.0.0",
   "description": "a notion client",
   "main": "src/index.ts",
@@ -27,7 +27,7 @@
     "@notionhq/client": "^0.4.13"
   },
   "devDependencies": {
-    "@dev/preset": "workspace:^",
+    "@bffr/preset": "workspace:^",
     "@types/node": "^17.0.15",
     "gts": "^3.1.0",
     "jest": "^27.4.7",

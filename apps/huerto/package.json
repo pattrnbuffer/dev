@@ -14,10 +14,10 @@
     "bootstrap": "ts-node ./bin/setup.ts"
   },
   "dependencies": {
+    "@bffr/hooks": "workspace:^",
+    "@bffr/node-hue-api": "workspace:^",
+    "@bffr/tools": "workspace:^",
     "@chakra-ui/react": "^1.8.3",
-    "@dev/hooks": "workspace:^",
-    "@dev/node-hue-api": "workspace:^",
-    "@dev/tools": "workspace:^",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@evanrs/fetch": "^0.2.0",
@@ -44,8 +44,8 @@
     "xy": "^0.0.0"
   },
   "devDependencies": {
-    "@dev/preset": "workspace:^",
-    "@dev/prompts": "workspace:^",
+    "@bffr/preset": "workspace:^",
+    "@bffr/prompts": "workspace:^",
     "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",

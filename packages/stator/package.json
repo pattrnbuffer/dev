@@ -1,5 +1,5 @@
 {
-  "name": "@dev/stator",
+  "name": "@bffr/stator",
   "version": "0.0.0",
   "description": "The transfer of energy to and from the changing part of your system",
   "main": "build/index.js",
@@ -19,13 +19,13 @@
   },
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
-    "@dev/preset": "portal:../preset/",
+    "@bffr/preset": "portal:../preset/",
     "bun-types": "^0.2.0",
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@dev/hooks": "portal:../hooks/",
-    "@dev/tools": "portal:../tools/",
+    "@bffr/hooks": "portal:../hooks/",
+    "@bffr/tools": "portal:../tools/",
     "@evanrs/fetch": "^0.2.0",
     "@sindresorhus/is": "4.6.0",
     "@types/react": "^18.0.21",

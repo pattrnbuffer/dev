@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { inspect } from 'util';
 import { pick, pickBy, filter } from 'lodash';
-import { v3 } from '@dev/node-hue-api';
+import { v3 } from '@bffr/node-hue-api';
 
 import { Lights } from '~/bin/lights';
 import { Links } from '~/bin/links';
-import { func, mapPromise } from '@dev/tools';
+import { func, mapPromise } from '@bffr/tools';
 
 export type LightStateRequest = {
   command: LightStateCommand;

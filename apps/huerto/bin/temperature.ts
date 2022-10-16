@@ -1,10 +1,10 @@
 #! /usr/bin/env yarn ts-node
 
-import { v3 } from '@dev/node-hue-api';
+import { v3 } from '@bffr/node-hue-api';
 import { Link } from './links';
 import { Lights, LightLink } from './lights';
 import { LightsState, Promisable } from './types';
-import { mapPromise } from '@dev/tools';
+import { mapPromise } from '@bffr/tools';
 
 export const Color = {
   set: setColorForAllLights,

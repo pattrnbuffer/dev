@@ -1,5 +1,5 @@
-import { useAsyncEffect, useCapacitor, useEvent } from '@dev/hooks';
-import { number, ResultType } from '@dev/tools';
+import { useAsyncEffect, useCapacitor, useEvent } from '@bffr/hooks';
+import { number, ResultType } from '@bffr/tools';
 import { fetch } from '@evanrs/fetch';
 import type {
   LightState,

@@ -1,5 +1,5 @@
 import { useEffect, useState, DependencyList } from 'react';
-import { isPromise } from '@dev/tools';
+import { isPromise } from '@bffr/tools';
 import { useMountedRef, MountedRef } from './use-mounted-ref';
 
 export type MetaEffectCallback<T> = (mounted: MountedRef) => EffectReturn<T>;

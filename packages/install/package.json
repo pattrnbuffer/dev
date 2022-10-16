@@ -1,5 +1,5 @@
 {
-  "name": "@dev/install",
+  "name": "@bffr/install",
   "packageManager": "yarn@3.1.1",
   "version": "1.0.0",
   "dependencies": {

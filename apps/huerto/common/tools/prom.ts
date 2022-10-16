@@ -1,1 +1,1 @@
-export { promise as prom } from '@dev/tools';
+export { promise as prom } from '@bffr/tools';

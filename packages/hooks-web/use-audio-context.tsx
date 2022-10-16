@@ -8,9 +8,9 @@ const AudioContextContext = createContext<AudioContext>(
 export const AudioContextProvider = AudioContextContext.Provider;
 
 /**
- * move to  @dev/whooks … web
- * consider @dev/uhooks … universal
- * or even  @dev/nhooks … native
+ * move to  @bffr/whooks … web
+ * consider @bffr/uhooks … universal
+ * or even  @bffr/nhooks … native
  */
 export function useAudioContext(
   customContext?: AudioContextOptions | InstanceType<typeof AudioContext>,

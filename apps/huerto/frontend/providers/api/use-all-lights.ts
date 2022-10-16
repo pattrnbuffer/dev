@@ -1,5 +1,5 @@
-import { useCallbackRef } from '@dev/hooks';
-import { ResultType } from '@dev/tools';
+import { useCallbackRef } from '@bffr/hooks';
+import { ResultType } from '@bffr/tools';
 import { fetch } from '@evanrs/fetch';
 import { useEffect, useState } from 'react';
 import type { AllLightsResponseData } from '~/pages/api/hue/all-lights';

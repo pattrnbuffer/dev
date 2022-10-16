@@ -1,5 +1,5 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
-import { useMountedEffect, useMountedRef } from '@dev/hooks';
+import { useMountedEffect, useMountedRef } from '@bffr/hooks';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useMemo } from 'react';

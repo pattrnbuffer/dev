@@ -3,7 +3,7 @@
 import ora from 'ora';
 import { inspect } from 'util';
 import { notion } from '~/backend/notion';
-import { promise } from '@dev/tools';
+import { promise } from '@bffr/tools';
 import prompts from 'prompts';
 /**
  * TODO: pull table into file
