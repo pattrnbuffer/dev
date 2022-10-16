@@ -20,6 +20,8 @@
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
     "@bffr/preset": "workspace:*",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/jest": "^29.1.2",
     "@types/react": "^18.0.21",
     "typescript": "^4.6.2"
   },
