@@ -1,7 +1,10 @@
 {
   "extends": "@bffr/preset/tsconfig.json",
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "build",
-  }
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "exclude": ["dist"]
 }

@@ -9,7 +9,7 @@ export function useHighFrequencyCapacitor<T, I = any>(
   const capacitor = useRef<T[]>([]);
 
   const [flush, setFlush] = useState(false);
-  const [history, setHistory] = useState(
+  const [history, setHistory] = useState<T[]>(
     value && identify(value) ? [value] : [],
   );
 
@@ -38,7 +38,7 @@ export function useHighFrequencyCapacitor<T, I = any>(
     capacitor.current = [];
 
     setHistory(hist => {
-      hist = current.reduce((hist, value) => {
+      const next = current.reduce((hist, value) => {
         const index = history.findIndex(v => identify(value) === identify(v));
 
         return index < 0

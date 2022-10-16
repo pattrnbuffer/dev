@@ -1563,9 +1563,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bffr/hooks-web@workspace:packages/hooks-web"
   dependencies:
-    "@bffr/hooks": "workspace:^"
-    "@bffr/preset": "workspace:^"
-    "@bffr/tools": "workspace:^"
+    "@bffr/hooks": "workspace:*"
+    "@bffr/preset": "workspace:*"
+    "@bffr/tools": "workspace:*"
     typescript: ^4.6.2
   languageName: unknown
   linkType: soft
@@ -1574,9 +1574,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bffr/hooks@portal:../hooks/::locator=%40bffr%2Fstator%40workspace%3Apackages%2Fstator"
   dependencies:
-    "@bffr/tools": "workspace:^"
+    "@bffr/tools": "workspace:*"
     "@evanrs/fetch": ^0.2.0
     "@sindresorhus/is": 4.6.0
+    react: ^18.2.0
   languageName: node
   linkType: soft
 
@@ -1584,10 +1585,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@bffr/hooks@workspace:packages/hooks"
   dependencies:
-    "@bffr/preset": "workspace:^"
-    "@bffr/tools": "workspace:^"
+    "@bffr/preset": "workspace:*"
+    "@bffr/tools": "workspace:*"
     "@evanrs/fetch": ^0.2.0
     "@sindresorhus/is": 4.6.0
+    "@types/react": ^18.0.21
+    react: ^18.2.0
     typescript: ^4.6.2
   languageName: unknown
   linkType: soft

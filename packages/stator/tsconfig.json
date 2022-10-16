@@ -3,11 +3,11 @@
   "compilerOptions": {
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "build",
-    "rootDir": ".",
+    "outDir": "dist",
+    "rootDir": "src",
     "lib": ["DOM"],
     "jsx": "react-jsx",
     "types": ["bun-types"]
   },
-  "exclude": ["build"]
+  "exclude": ["dist"]
 }

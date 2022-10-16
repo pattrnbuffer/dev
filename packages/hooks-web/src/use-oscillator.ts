@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useAudioContext } from './use-audio-context';
-import { useEffectSets } from './use-effect-sets';
+import { useEffectSets } from '@bffr/hooks';
 
 type AudioContextOscillatorProps = {
   frequency?: number;

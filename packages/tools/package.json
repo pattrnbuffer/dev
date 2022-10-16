@@ -2,7 +2,7 @@
   "name": "@bffr/tools",
   "version": "1.0.0",
   "description": "Hammers, saws, and more pure function tools.",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rm -rf ./dist && tsc -b",
@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
-    "@bffr/preset": "workspace:^",
+    "@bffr/preset": "workspace:*",
     "typescript": "^4.6.2"
   },
   "dependencies": {

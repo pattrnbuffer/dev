@@ -7,7 +7,7 @@
   // "typescript.enablePromptUseWorkspaceTsdk": true,
   "files.exclude": {
     "**/node_modules": false,
-    "**/.gitkeep": true,
+    "**/.gitkeep": true
     // ".yarn": true,
     // ".vscode": true,
     // "**/layer": true,
@@ -38,4 +38,5 @@
     "commandCenter.border": "#15202b99"
   },
   "peacock.color": "#f1b026",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

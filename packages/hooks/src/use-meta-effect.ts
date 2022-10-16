@@ -23,7 +23,7 @@ export function useMetaEffect<T>(
       : [result];
 
     if (isPromise(data)) {
-      data.then(mounted.guard(setValue));
+      data?.then(mounted.guard(setValue));
     } else if (data) {
       setValue(data);
     }

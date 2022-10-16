@@ -1,11 +1,11 @@
 {
   "name": "@bffr/hooks-web",
   "version": "1.0.0",
-  "description": "The definitive collection of idiomatic hooks 👀",
-  "main": "build/index.js",
-  "types": "./build/index.d.ts",
+  "description": "A tailored set of hooks for web 👀",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "rm -rf ./build && tsc",
+    "build": "rm -rf ./dist && tsc -b",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,10 +19,11 @@
   },
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
-    "@bffr/preset": "workspace:^",
+    "@bffr/preset": "workspace:*",
     "typescript": "^4.6.2"
   },
   "dependencies": {
-    "@bffr/tools": "workspace:^"
+    "@bffr/hooks": "workspace:*",
+    "@bffr/tools": "workspace:*"
   }
 }

@@ -19,11 +19,14 @@
   },
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
-    "@bffr/preset": "workspace:^",
+    "@bffr/preset": "workspace:*",
+    "@types/react": "^18.0.21",
     "typescript": "^4.6.2"
   },
   "dependencies": {
-    "@bffr/tools": "workspace:^",
-    "@evanrs/fetch": "^0.2.0"
+    "@bffr/tools": "workspace:*",
+    "@evanrs/fetch": "^0.2.0",
+    "@sindresorhus/is": "4.6.0",
+    "react": "^18.2.0"
   }
 }

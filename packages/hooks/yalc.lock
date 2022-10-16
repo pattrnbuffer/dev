@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@bffr/tools": {
+      "signature": "20a1c9655c88ae52b5825a2339f8bc2d",
+      "file": true,
+      "replaced": "workspace:^"
+    }
+  }
+}
