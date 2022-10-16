@@ -25,6 +25,7 @@
     "find-root": "^1.1.0",
     "framer-motion": "5",
     "got": "11",
+    "jotai": "^1.8.0",
     "js-quantities": "^1.7.6",
     "ky": "^0.28.7",
     "luxon": "^2.3.1",

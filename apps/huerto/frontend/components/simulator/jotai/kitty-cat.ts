@@ -51,7 +51,7 @@ export function useKittyCat() {
     // TODO world tick
     const id = setInterval(() => {
       setCat(Math.random());
-    }, 200);
+    }, 1000);
 
     return () => clearInterval(id);
   }, [String(size)]);

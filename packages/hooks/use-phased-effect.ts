@@ -1,9 +1,9 @@
-import { useState, useEffect, useReducer, EffectCallback } from 'react';
+import { useEffect, useReducer, EffectCallback } from 'react';
 
 type PhaseState = { phase: number; destructors: Destructor[] };
 type PhaseChange =
-  | { type: 'continuation'; destructor?: Destructor }
-  | { type: 'invocation' };
+  | { type: 'invocation' }
+  | { type: 'continuation'; destructor?: Destructor };
 
 type Destructor = ReturnType<EffectCallback>;
 

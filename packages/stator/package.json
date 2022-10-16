@@ -19,12 +19,16 @@
   },
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
-    "@dev/preset": "workspace:^",
+    "@dev/preset": "portal:../preset/",
+    "bun-types": "^0.2.0",
     "typescript": "^4.8.4"
   },
   "dependencies": {
-    "@dev/hooks": "workspace:^",
-    "@dev/tools": "workspace:^",
-    "@evanrs/fetch": "^0.2.0"
+    "@dev/hooks": "portal:../hooks/",
+    "@dev/tools": "portal:../tools/",
+    "@evanrs/fetch": "^0.2.0",
+    "@sindresorhus/is": "4.6.0",
+    "@types/react": "^18.0.21",
+    "react": "^18.2.0"
   }
 }

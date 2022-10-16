@@ -1,0 +1,17 @@
+{
+  "display": "@bffr/dev",
+  "extends": "gts/tsconfig-google.json",
+  "compilerOptions": {
+    "target": "es2021",
+    "lib": [
+      "es2015.iterable",
+      "ESNext",
+      "es2021",
+    ],
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitReturns": false
+  }
+}

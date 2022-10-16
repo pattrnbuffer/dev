@@ -10,7 +10,7 @@ export const and = {
  *
  * Will return value if found as a Value of source
  */
-export function andV<T extends string>(source: unknown, value?: T) {
+export function andV<T extends string>(source: T[], value?: T) {
   if (value == null) return;
 
   return Array.isArray(source)

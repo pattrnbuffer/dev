@@ -25,12 +25,39 @@ export function distanceFor(
   lens: number[] = [],
 ) {
   lens = [...lens].reverse();
+  // return distance(
+  //   lens.map(v => v ?? 0.5),
+  //   position.map((v, i) => v / dimensions[i]),
+  // );
   const surface = position.map((v, i) => v / dimensions[i]);
   const pairs = surface.map((v, i) => [lens[i] ?? 0.5, v]);
-
   // distance between two points
-  // d = √[(x2 − x1)2 + (y2 − y1)2 + (z2 − z1)2]
+  // d = √[(x2 − x1)^2 + (y2 − y1)^2 + (z2 − z1)^2]
   return Math.sqrt(
     pairs.map(([a1, a2]) => (a1 - a2) ** 2).reduce((a, b) => a + b, 0),
   );
+}
+
+function distance(...vectors: number[][]) {
+  const difference = combine((a, b = 0) => a - b, vectors);
+  console.log(vectors, difference);
+  return Math.sqrt(difference.map(d => d ** 2).reduce((a, b) => a + b, 0));
+}
+
+function combine(
+  operation: (a: number, b: number | undefined, i: number) => number,
+  vectors: number[][],
+) {
+  const size = vectors.reduce((value, arr) => Math.max(value, arr?.length), 0);
+
+  return Array.from({ length: size }).map((_, i) => {
+    const value = vectors.reduce(
+      (a, b) => operation(a, b[i] ?? undefined, i),
+      0,
+    );
+
+    console.log('vectors, value', vectors, value);
+
+    return value;
+  });
 }
