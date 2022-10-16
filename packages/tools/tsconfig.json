@@ -3,8 +3,8 @@
   "compilerOptions": {
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "outDir": "build",
+    "outDir": "dist",
     "rootDir": "."
   },
-  "exclude": ["build"]
+  "exclude": ["dist"]
 }
