@@ -16,16 +16,14 @@ export function createIdentityLayer<T>(identityOf: IdentityMap<T>) {
     identityOf(undefined, undefined, RootMode),
   );
 
-  const IdentityLayer: FC<{
-    children: ReactNode;
-    map: (update?: T, reduced?: T) => T;
-  }> = ({ children, map }) => {
-    map ??= identityOf;
-
+  const IdentityLayer: FC<{ children: ReactNode; map?: IdentityMap<T> }> = ({
+    children,
+    map = identityOf,
+  }) => {
     const context = useContext(IdentityLayerContext);
-    const identity = Object.assign(useRef<ReturnType<typeof map>>(), {
-      current: useMemo(() => map(context, identity.current), [context]),
-    });
+    const identity = useRef<T>(undefined as T);
+
+    identity.current = useMemo(() => map(context, identity.current), [context]);
 
     return (
       <IdentityLayerContext.Provider value={identity.current}>

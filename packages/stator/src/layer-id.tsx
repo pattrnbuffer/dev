@@ -11,12 +11,12 @@ type LayerIdValue = number | string | symbol;
 
 const LayerIdContext = createContext<LayerIdValue>(0);
 
-type SLFC<T, U = T> = FC<{
+export type LIFC<T, U = T> = FC<{
   map: (update: T, reduced: U | undefined) => U;
   children: ReactNode;
 }>;
 
-export const LayerId: SLFC<LayerIdValue> = ({ children, map }) => {
+export const LayerId: LIFC<LayerIdValue> = ({ children, map }) => {
   const context = useContext(LayerIdContext);
   const state = Object.assign(useRef<ReturnType<typeof map>>(), {
     current: useMemo(() => map(context, state.current), [context]),
