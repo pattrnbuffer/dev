@@ -11,18 +11,19 @@ export function useLocalStorage<T>(
   value: T | undefined,
   write: ((value: T) => void) | ((path: string, value: T) => void),
 ] {
-  const [value, setValue] = [
-    LocalStorageState.useSelector<T>(ctx => get(ctx.value, basepath)) ??
-      fallback,
+  const [state, setState] = [
+    LocalStorageState.useSelector<T>(ctx => get(ctx.value, basepath)),
     LocalStorageState.useUpdate(),
   ];
-  useEffect(() => setValue(state => state ?? fallback), []);
+  useEffect(() => setState(state => state ?? fallback), []);
 
   return [
-    value,
-    (...{ 0: a, 1: b, length }: [T] | [string, T]) => {
-      setValue(state => {
-        const [path, value] = length < 2 ? [[], a as T] : [toPath(a), b as T];
+    state ?? fallback,
+    (...$: [T] | [string, T]) => {
+      setState(state => {
+        const [path, value] = <[string[], T]>(
+          ($.length < 2 ? [[], $[0]] : [toPath($[0]), $[1]])
+        );
 
         return path.length === 0 ? value : set(state, path, value);
       });
