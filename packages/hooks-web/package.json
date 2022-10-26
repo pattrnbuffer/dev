@@ -21,10 +21,19 @@
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
     "@bffr/preset": "workspace:*",
+    "@types/lodash": "^4.14.186",
+    "@types/react": "^18.0.22",
+    "@types/react-dom": "^18.0.7",
     "typescript": "^4.6.2"
   },
   "dependencies": {
     "@bffr/hooks": "workspace:*",
-    "@bffr/tools": "workspace:*"
+    "@bffr/tools": "workspace:*",
+    "immer": "^9.0.16",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-tracked": "^1.7.10",
+    "use-immer": "^0.7.0"
   }
 }
