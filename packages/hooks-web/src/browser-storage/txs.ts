@@ -1,3 +1,8 @@
+export type Tx = {
+  parse<T>(value: unknown): T | undefined;
+  stringify<T>(value: T): string | undefined;
+};
+
 export const StringTx = {
   parse: _ => _,
   stringify: _ => String(_),

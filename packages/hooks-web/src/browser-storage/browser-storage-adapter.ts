@@ -1,26 +1,26 @@
-import { JSON } from './txs';
+import { JSON, Tx } from './txs';
 
 type Storage = globalThis.Storage;
 type MethodNames = 'setItem' | 'getItem' | 'removeItem' | 'clear';
-type Fallback<K extends MethodNames, T = string> = (
-  ...args: Parameters<Storage[K]>
-) => T | undefined;
+type Fallback<
+  K extends MethodNames,
+  T = never,
+  P extends any[] = Parameters<Storage[K]>,
+> = (...args: P) => T extends never ? ReturnType<Storage[K]> : T;
 
-export const LocalStorage = createBrowserStorageAdapter(
-  isBrowserStorageAvailable('local')
-    ? (window.localStorage as Storage)
-    : undefined,
-);
+export type StorageKind = keyof typeof storage;
 
-export const SessionStorage = createBrowserStorageAdapter(
-  isBrowserStorageAvailable('session')
-    ? (window.sessionStorage as Storage)
-    : undefined,
-);
-
-export const StorageAdapters = {
-  local: LocalStorage,
-  session: SessionStorage,
+export const storage = {
+  local: createBrowserStorageAdapter(
+    isBrowserStorageAvailable('local')
+      ? (window.localStorage as Storage)
+      : undefined,
+  ),
+  session: createBrowserStorageAdapter(
+    isBrowserStorageAvailable('session')
+      ? (window.sessionStorage as Storage)
+      : undefined,
+  ),
 } as const;
 
 export function createBrowserStorageAdapter(source?: Storage, tx = JSON) {
@@ -30,18 +30,18 @@ export function createBrowserStorageAdapter(source?: Storage, tx = JSON) {
   });
 
   return {
-    set: (key: string, value: string, fallback: Fallback<'setItem'>) =>
-      setItem ? setItem(key, tx.stringify(value)!) : fallback(key, value),
+    set: <T>(k: string, v: T, fb?: Fallback<'setItem', void, [string, T]>) =>
+      setItem ? setItem(k, tx.stringify(v)!) : fb?.(k, v),
 
-    get: (key: string, fallback: Fallback<'getItem'>) =>
-      getItem ? tx.parse(getItem(key)) ?? undefined : fallback(key),
+    get: <T>(k: string, fb?: Fallback<'getItem', [string, T]>) =>
+      getItem ? tx.parse(getItem(k)) ?? undefined : fb?.(k),
 
-    remove: (key: string, fallback: Fallback<'removeItem'>) =>
-      removeItem ? removeItem(key) : fallback(key),
+    remove: (k: string, fb?: Fallback<'removeItem'>) =>
+      removeItem ? removeItem(k) : fb?.(k),
 
-    clear: (fallback: Fallback<'clear'>) =>
+    clear: (fallback?: Fallback<'clear'>) =>
       // next line please
-      clear ? clear() : fallback(),
+      clear ? clear() : fallback?.(),
   };
 }
 
