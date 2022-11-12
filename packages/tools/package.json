@@ -1,9 +1,14 @@
 {
   "name": "@bffr/tools",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Hammers, saws, and more pure function tools.",
   "main": "./dist/index.js",
+  "source": "./src/index.ts",
   "types": "./dist/index.d.ts",
+  "files": [
+    "./dist/*",
+    "./src/*"
+  ],
   "scripts": {
     "build": "rm -rf ./dist && tsc -b",
     "publish": "yarn build && npm publish --access public",
