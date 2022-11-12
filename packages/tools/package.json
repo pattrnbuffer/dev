@@ -1,6 +1,6 @@
 {
   "name": "@bffr/tools",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Hammers, saws, and more pure function tools.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
     "@bffr/preset": "workspace:*",
+    "@sindresorhus/is": "4.6.0",
     "typescript": "^4.6.2"
   },
   "dependencies": {

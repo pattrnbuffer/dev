@@ -23,3 +23,20 @@ export function keyOf<U extends Record<any, any>>(
 ): key is keyof U {
   return typeof key === 'string' && key in source;
 }
+
+export function updatePath<T>(target: T, path: string[], update: any) {
+  path.reduce((node, key, index, { [index + 1]: next }) => {
+    if (!next) node[key] = update;
+
+    return node[key];
+  }, target as any);
+}
+
+export function bind<T extends object>(target: T) {
+  return new Proxy<T>(target, {
+    get(source, key) {
+      const value = source?.[key as keyof T];
+      return typeof value === 'function' ? value.bind(source) : value;
+    },
+  });
+}

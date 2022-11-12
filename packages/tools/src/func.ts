@@ -1,11 +1,10 @@
 import { G } from '@mobily/ts-belt';
 
-export const func = {
-  value: valueFromFn,
-  apply,
-};
+export const noop = (...args: any) => {};
 
-export function valueFromFn<T>(callable: T | (() => T)) {
+export const identity = <T>(v: T) => v;
+
+export function valueOf<T extends any>(callable: T | (() => T)) {
   return G.isFunction(callable) ? callable() : callable;
 }
 
@@ -23,3 +22,11 @@ export function apply<R, T extends (...args: any) => R>(
 
   return fallback;
 }
+
+export const func = {
+  noop,
+  identity,
+  apply,
+  value: valueOf,
+  valueOf,
+};

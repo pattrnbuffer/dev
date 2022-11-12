@@ -1,21 +1,9 @@
-export function createTimeout(fn: () => unknown, duration: number) {
-  const id = setTimeout(fn, duration);
+export type Timer<T> = (fn: () => unknown, duration: number) => T;
 
-  return () => void clearTimeout(id);
-}
+export const createTimeout = createTimer(setTimeout, clearTimeout);
+export const createInterval = createTimer(setInterval, clearInterval);
 
-export function createInterval(fn: () => unknown, duration: number) {
-  const id = setInterval(fn, duration);
-
-  return () => void clearInterval(id);
-}
-
-type Timer<T> = (fn: () => unknown, duration: number) => T;
-
-/**
- * I guess I  was bored
- */
-function createTimer<T>(
+export function createTimer<T>(
   set: Timer<T>,
   clear: (v: T) => unknown,
 ): Timer<() => void> {
@@ -26,6 +14,3 @@ function createTimer<T>(
     return () => void clear(id);
   };
 }
-
-// const createTimeout = createTimer(setTimeout, clearTimeout);
-// const createInterval = createTimer(setInterval, clearInterval);
