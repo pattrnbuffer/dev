@@ -38,14 +38,14 @@ function at<T>(delta: number, source?: ArraySource<T>) {
   return value[delta % value.length];
 }
 
-function from<T>(source?: ArraySource<T>): T[] {
+function from<T>(source?: T | ArraySource<T>): T[] {
   return source == null
     ? []
     : Array.isArray(source)
     ? source
     : isArrayLike(source) || isIterable(source)
     ? Array.from(source)
-    : [];
+    : [source];
 }
 
 function last<T>(source?: ArraySource<T>) {
