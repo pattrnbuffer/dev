@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "build": "rm -rf ./dist && tsc -b",
-    "publish": "yarn build && npm publish --access public",
+    "prepublishOnly": "yarn build",
+    "publish": "npm publish --access public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,7 +33,7 @@
     "typescript": "^4.6.2"
   },
   "dependencies": {
-    "@bffr/tools": "^0.0.4",
+    "@bffr/tools": "^0.0.5",
     "@evanrs/fetch": "^0.2.0",
     "@sindresorhus/is": "4.6.0",
     "react": "^18.2.0"

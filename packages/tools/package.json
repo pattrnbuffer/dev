@@ -1,6 +1,6 @@
 {
   "name": "@bffr/tools",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Hammers, saws, and more pure function tools.",
   "main": "./dist/index.js",
   "source": "./src/index.ts",
@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "build": "rm -rf ./dist && tsc -b",
-    "publish": "yarn build && npm publish --access public",
+    "prepublishOnly": "yarn build",
+    "publish": "npm publish --access public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
