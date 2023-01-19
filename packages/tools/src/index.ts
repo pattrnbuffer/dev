@@ -15,6 +15,7 @@ export * from './object';
 export * from './promise';
 export * from './result';
 export * from './timer';
+export * from './match';
 
 export { boolean as bool } from './boolean';
 export { promise as prom } from './promise';

@@ -8,6 +8,8 @@ export const promise = {
   follow: followPromise,
   instance: isPromise,
   like: isPromiseLike,
+  delay: delayFor,
+  resolveAfter: resolveAfter,
 };
 
 export function mapPromise<T, R>(
@@ -45,4 +47,26 @@ export function isPromiseLike<T>(
   data: T | PromiseLike<T>,
 ): data is PromiseLike<T> {
   return Boolean(data) && 'then' in data && typeof data.then === 'function';
+}
+
+export function delayFor(duration: number) {
+  return new Promise(next => setTimeout(next, duration));
+}
+
+export function resolveAfter<T>(
+  duration: number,
+  promise: Promise<T | undefined>,
+) {
+  return <Promise<T>>Promise.race([promise, delayFor(duration)]);
+}
+
+export function rejectAfter<T>(duration: number, promise: Promise<T>) {
+  return <Promise<T>>(
+    Promise.race([
+      promise,
+      new Promise(async (_, reject) =>
+        reject((await delayFor(duration), undefined)),
+      ),
+    ])
+  );
 }
