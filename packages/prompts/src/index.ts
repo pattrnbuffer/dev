@@ -1,2 +1,2 @@
 export * from './tools';
-export * from './promp-tools';
+export * from './promp';
