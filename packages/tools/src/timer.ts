@@ -16,16 +16,34 @@ export function createTimer<T>(
 }
 
 const timeout = 4 * 16;
-export function createIdleCallback(callback: () => unknown) {
+const requestIdleCallback = window?.requestIdleCallback;
+
+type CreateIdleCallbackProps<T> = IdleRequestOptions & {
+  fallback?: (effect: T, options: IdleRequestOptions) => () => void;
+};
+
+export function createIdleCallback<T extends IdleRequestCallback>(
+  effect: T,
+  { fallback, ...options }: CreateIdleCallbackProps<T> = {},
+) {
   // not supported by all browsers or environments
-  // @ts-expect-error: window this window that
-  if (window?.requestIdleCallback != null) {
-    // @ts-expect-error: window this window that
-    let id = window.requestIdleCallback(() => callback?.(), { timeout });
-    // @ts-expect-error: window this window that
+  if (requestIdleCallback != null) {
+    const id = requestIdleCallback(a => effect?.(a), { timeout, ...options });
     return () => window.cancelIdleCallback(id);
-  } else {
-    let id = setTimeout(callback, timeout);
+  }
+  // takes optional fallback
+  else if (typeof fallback === 'function') {
+    const timer = fallback(effect, options);
+    // requires the fallbacks to return a timer cancelation
+    if (typeof timer !== 'function')
+      throw new Error(
+        'createIdleCallback expected a cancelation `() => void` be returned from fallback',
+      );
+    else return timer;
+  }
+  // otherwise defaults to setTimeout
+  else {
+    const id = setTimeout(effect, timeout);
     return () => clearTimeout(id);
   }
 }

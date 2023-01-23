@@ -1,6 +1,7 @@
 {
   "extends": "@bffr/preset/tsconfig.json",
   "compilerOptions": {
+    "lib": ["DOM"],
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "outDir": "dist",
