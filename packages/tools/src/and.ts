@@ -1,8 +1,11 @@
+// this is getting a little ridiculous right?
 export const and = {
   k: andK,
   key: andK,
   v: andV,
   value: andV,
+  includes: andV,
+  keyin: andK,
 };
 
 /**
@@ -32,3 +35,6 @@ export function andK<T extends string>(source: unknown, value?: T) {
 
   return value in (source as Record<T, unknown>) ? value : undefined;
 }
+
+export const includes = andV;
+export const keyin = andK;

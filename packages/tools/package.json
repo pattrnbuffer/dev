@@ -1,6 +1,6 @@
 {
   "name": "@bffr/tools",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Hammers, saws, and more pure function tools.",
   "main": "./dist/index.js",
   "source": "./src/index.ts",
