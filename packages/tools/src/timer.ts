@@ -15,20 +15,21 @@ export function createTimer<T>(
   };
 }
 
-const timeout = 4 * 16;
-const requestIdleCallback = window?.requestIdleCallback;
-
-type CreateIdleCallbackProps<T> = IdleRequestOptions & {
+export type CreateIdleCallbackProps<T> = IdleRequestOptions & {
   fallback?: (effect: T, options: IdleRequestOptions) => () => void;
 };
+
+const requestIdleCallback = window?.requestIdleCallback;
 
 export function createIdleCallback<T extends IdleRequestCallback>(
   effect: T,
   { fallback, ...options }: CreateIdleCallbackProps<T> = {},
 ) {
+  options = { timeout: createIdleCallback.timeout, ...options };
+
   // not supported by all browsers or environments
   if (requestIdleCallback != null) {
-    const id = requestIdleCallback(a => effect?.(a), { timeout, ...options });
+    const id = requestIdleCallback(a => effect?.(a), options);
     return () => window.cancelIdleCallback(id);
   }
   // takes optional fallback
@@ -43,7 +44,8 @@ export function createIdleCallback<T extends IdleRequestCallback>(
   }
   // otherwise defaults to setTimeout
   else {
-    const id = setTimeout(effect, timeout);
+    const id = setTimeout(effect, options.timeout);
     return () => clearTimeout(id);
   }
 }
+createIdleCallback.timeout = 4 * 16;
