@@ -9,3 +9,7 @@ export * from './use-capacitor';
 export * from './use-high-frequency-capacitor';
 export * from './use-bounce-result';
 export * from './use-ref-proxy';
+export * from './use-ref-memo';
+export * from './use-destruct';
+export * from './use-idle-value';
+export * from './use-animation-phase';

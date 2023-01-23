@@ -1,6 +1,6 @@
 {
   "name": "@bffr/hooks",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "The definitive collection of idiomatic hooks 👀",
   "main": "./dist/index.js",
   "source": "./src/index.ts",
