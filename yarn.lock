@@ -1629,13 +1629,11 @@ __metadata:
     "@types/react": ^18.0.22
     "@types/react-dom": ^18.0.7
     immer: ^9.0.16
-    jotai: ^1.8.6
     lodash: ^4.17.21
     react: ^18.2.0
     react-dom: ^18.2.0
     react-tracked: ^1.7.10
     typescript: ^4.6.2
-    use-context-selector: ^1.4.1
     use-immer: ^0.7.0
   languageName: unknown
   linkType: soft
@@ -1645,14 +1643,16 @@ __metadata:
   resolution: "@bffr/hooks@workspace:packages/hooks"
   dependencies:
     "@bffr/preset": "workspace:*"
-    "@bffr/tools": "workspace:*"
+    "@bffr/tools": "workspace:^"
     "@evanrs/fetch": ^0.2.0
     "@sindresorhus/is": 4.6.0
     "@testing-library/react-hooks": ^8.0.1
     "@types/jest": ^29.1.2
     "@types/react": ^18.0.21
-    react: ^18.2.0
+    react: ^18.1.0
     typescript: ^4.6.2
+  peerDependencies:
+    react: ^18.1.0
   languageName: unknown
   linkType: soft
 
@@ -1736,8 +1736,12 @@ __metadata:
   resolution: "@bffr/prompts@workspace:packages/prompts"
   dependencies:
     "@bffr/preset": "workspace:^"
+    "@types/prompts": ^2.4.2
     prompts: ^2.4.2
     typescript: ^4.6.2
+  peerDependencies:
+    "@types/prompts": ^2.4.2
+    prompts: ^2.4.2
   languageName: unknown
   linkType: soft
 
@@ -1772,6 +1776,7 @@ __metadata:
   dependencies:
     "@bffr/preset": "workspace:*"
     "@mobily/ts-belt": ^3.11.0
+    "@sindresorhus/is": 4.6.0
     typescript: ^4.6.2
   languageName: unknown
   linkType: soft
@@ -5711,6 +5716,16 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 05cc828c35585eabf53b8ed8626b173d46a9f61f07cb4b31ba7705d4982e63bdc3a68fe29e0e0d5c4eddd31c6114b2dcbc4662826be0468e2aa7c0ba0573d797
+  languageName: node
+  linkType: hard
+
+"@types/prompts@npm:^2.4.2":
+  version: 2.4.2
+  resolution: "@types/prompts@npm:2.4.2"
+  dependencies:
+    "@types/node": "*"
+    kleur: ^3.0.3
+  checksum: 1c2277534a546d77fe7390e4a3a34881ceb7015c95f5b22d1b239cb6c287c300c4dc5a713c1f734f3f892b243225ed703b1d1d149b9995af024c7a19dc49369e
   languageName: node
   linkType: hard
 
@@ -13435,43 +13450,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^1.8.6":
-  version: 1.8.6
-  resolution: "jotai@npm:1.8.6"
-  peerDependencies:
-    "@babel/core": "*"
-    "@babel/template": "*"
-    "@tanstack/query-core": "*"
-    "@urql/core": "*"
-    immer: "*"
-    optics-ts: "*"
-    react: ">=16.8"
-    valtio: "*"
-    wonka: "*"
-    xstate: "*"
-  peerDependenciesMeta:
-    "@babel/core":
-      optional: true
-    "@babel/template":
-      optional: true
-    "@tanstack/query-core":
-      optional: true
-    "@urql/core":
-      optional: true
-    immer:
-      optional: true
-    optics-ts:
-      optional: true
-    valtio:
-      optional: true
-    wonka:
-      optional: true
-    xstate:
-      optional: true
-  checksum: fbce62f60311a1fe1d64d50d5e55097497c6c362a8e740c048f0ad964eb7dea4472c32a6b0bf7f6e1c33f4653ba29c136ec5856bf8ae3af82c8c9e3839f91f6e
-  languageName: node
-  linkType: hard
-
 "js-levenshtein@npm:^1.1.6":
   version: 1.1.6
   resolution: "js-levenshtein@npm:1.1.6"
@@ -17284,7 +17262,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0, react@npm:^18, react@npm:^18.0.0-rc.0, react@npm:^18.2.0":
+"react@npm:18.2.0, react@npm:^18, react@npm:^18.0.0-rc.0, react@npm:^18.1.0, react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
@@ -19905,7 +19883,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-context-selector@npm:1.4.1, use-context-selector@npm:^1.4.1":
+"use-context-selector@npm:1.4.1":
   version: 1.4.1
   resolution: "use-context-selector@npm:1.4.1"
   peerDependencies:

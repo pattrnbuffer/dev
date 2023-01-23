@@ -1,6 +1,6 @@
 {
   "name": "@bffr/hooks",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "The definitive collection of idiomatic hooks 👀",
   "main": "./dist/index.js",
   "source": "./src/index.ts",
@@ -27,15 +27,19 @@
   "homepage": "https://github.com/pattrnbuffer/dev#readme",
   "devDependencies": {
     "@bffr/preset": "workspace:*",
+    "@bffr/tools": "workspace:^",
     "@testing-library/react-hooks": "^8.0.1",
     "@types/jest": "^29.1.2",
     "@types/react": "^18.0.21",
+    "react": "^18.1.0",
     "typescript": "^4.6.2"
   },
+  "peerDependencies": {
+    "react": "^18.1.0"
+  },
   "dependencies": {
-    "@bffr/tools": "^0.0.5",
+    "@bffr/tools": "^0.0.8",
     "@evanrs/fetch": "^0.2.0",
-    "@sindresorhus/is": "4.6.0",
-    "react": "^18.2.0"
+    "@sindresorhus/is": "4.6.0"
   }
 }
